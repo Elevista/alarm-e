@@ -97,9 +97,6 @@
     <ClCompile Include="..\2014-2학\전공-MFC\AA\alarm-e.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\2014-2학\전공-MFC\AA\alarm-eDIg.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="..\2014-2학\전공-MFC\AA\dllmain.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -134,6 +131,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="HookDll.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\2014-2학\전공-MFC\AA\alarm-eDlg.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

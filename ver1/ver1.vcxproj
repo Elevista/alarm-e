@@ -125,7 +125,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\2014-2학\전공-MFC\AA\alarm-e.cpp" />
-    <ClCompile Include="..\2014-2학\전공-MFC\AA\alarm-eDIg.cpp" />
+    <ClCompile Include="..\2014-2학\전공-MFC\AA\alarm-eDlg.cpp" />
     <ClCompile Include="..\2014-2학\전공-MFC\AA\Alarm_UICapture.cpp" />
     <ClCompile Include="..\2014-2학\전공-MFC\AA\Alarm_UIChild.cpp" />
     <ClCompile Include="..\2014-2학\전공-MFC\AA\Alarm_UIJoin.cpp" />
