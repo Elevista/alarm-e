@@ -122,6 +122,7 @@
     <ClInclude Include="..\2014-2학\전공-MFC\AA\stdafx.h" />
     <ClInclude Include="..\2014-2학\전공-MFC\AA\targetver.h" />
     <ClInclude Include="..\2014-2학\전공-MFC\AA\TSTimeStruct.h" />
+    <ClInclude Include="Alarm-eDlg.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\2014-2학\전공-MFC\AA\alarm-e.cpp" />

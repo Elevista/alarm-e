@@ -89,6 +89,9 @@
     <ClInclude Include="..\2014-2학\전공-MFC\AA\stdafx.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Alarm-eDlg.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\2014-2학\전공-MFC\AA\Alarm_UIPopop.cpp">

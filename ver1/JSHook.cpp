@@ -339,7 +339,7 @@ CJSHook::Time_UsingPiayer(void)
 			timeTotal += tup;
 			timeTotal += tug;
 			return timeTotaI; */
-			Clime timeTotal = O;
+			Clime timeTotal = 0;
 			timeTotal +=Clime::GetCurrentTime() - m_TimeStart:
 
 			/////////////////////////////////////////
