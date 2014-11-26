@@ -1,0 +1,36 @@
+
+// alarm-e.h : PROJECT_NAME 응용 프로그램에 대한 주 헤더 파일입니다.
+//
+
+#pragma once
+
+#ifndef __AFXWIN_H__
+	#error "PCH에 대해 이 파일을 포함하기 전에 'stdafx.h'를 포함합니다."
+#endif
+
+#include "resource.h"		// 주 기호입니다.
+#include "wordfilter.h"	//디비컨슈머 비속어 테이블
+#include "Manager.h"	//디비컨슈머 로그인 테이블
+
+// CalarmeApp:
+// 이 클래스의 구현에 대해서는 alarm-e.cpp을 참조하십시오.
+//
+
+class CalarmeApp : public CWinApp
+{
+public:
+	CalarmeApp();
+
+// 재정의입니다.
+public:
+	virtual BOOL InitInstance();
+
+// 구현입니다.
+	DECLARE_MESSAGE_MAP()
+};
+
+extern CalarmeApp theApp;
+//전역변수로 추가
+extern CString ID;
+extern CwordFilter filterDB;
+extern CManager loginDB;
