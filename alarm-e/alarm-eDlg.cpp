@@ -6,6 +6,7 @@
 #include "alarm-e.h"
 #include "alarm-eDlg.h"
 #include "afxdialogex.h"
+#include "ScreenShot.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -63,6 +64,7 @@ BEGIN_MESSAGE_MAP(CalarmeDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_BN_CLICKED(IDC_BUTTON1, &CalarmeDlg::OnBnClickedButton1)
 END_MESSAGE_MAP()
 
 
@@ -153,3 +155,9 @@ HCURSOR CalarmeDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+
+
+void CalarmeDlg::OnBnClickedButton1()
+{
+	AfxMessageBox(ScreenShot::capture());
+}

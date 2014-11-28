@@ -79,7 +79,6 @@ void CRegistDlg::OnBnClickedOk()
 
 		//레지스트리에 등록
 		theApp.WriteProfileStringW( _T("registrant"), _T("ID"), m_ID);
-		theApp.WriteProfileStringW( _T("registrant"), _T("PW"), m_PW);
 		theApp.WriteProfileInt( _T("authority"), _T("power"), 1); //로그인 상태
 	}else{
 		AfxMessageBox(_T("서버 안됨 핸들러"));

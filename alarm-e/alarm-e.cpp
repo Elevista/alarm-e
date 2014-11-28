@@ -8,6 +8,7 @@
 #include "alarm-eDlg.h"
 #include "Manager.h"
 #include "wordFilter.h"
+#include "ScreenShot.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -96,10 +97,7 @@ BOOL CalarmeApp::InitInstance()
 		return 0;	//고로 끔
 	}
 
-
-
-
-
+	
 	CalarmeDlg dlg;	//이거 트레이아이콘으로 백그라운드처럼 실행해야함
 	m_pMainWnd = &dlg;
 	INT_PTR nResponse = dlg.DoModal();
