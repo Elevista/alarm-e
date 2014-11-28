@@ -19,3 +19,24 @@ GetProfileStringW(_T("registrant"),_T("ID"),_T("등록없음"));
 
 
 DB는 아이디 admin 암호는 123456
+
+/*	디비 여는법
+CDatabase DB;
+DB.OpenEx(_T("DBQ=alarm-e.mdb;DefaultDir=.;Driver={Microsoft Access Driver (*.mdb)};DriverId=25;FIL=MS Access;FILEDSN=alarm-e.dsn;MaxBufferSize=2048;MaxScanRows=8;PageTimeout=5;SafeTransactions=0;Threads=3;UID=admin;PWD=123456;UserCommitSync=Yes;"));
+*/
+
+/*	쿼리로 resultset 얻는법
+CRecordset rs(&DB);
+CString Query;
+Query.Format(_T("Select * From wordFilter"));
+
+CDBVariant var;
+rs.Open(CRecordset::dynaset,Query);
+
+rs.GetFieldValue(_T("word"),var);
+CString msg=*var.m_pstring;
+*/
+
+/*	쿼리 때리는법
+DB.ExecuteSQL(_T("Insert Into wordFilter (word) Values ('새로추가')"));
+*/
