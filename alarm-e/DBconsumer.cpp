@@ -2,7 +2,7 @@
 #include "DBconsumer.h"
 
 // CcaptureImageDB 구현입니다.
-
+const CString DB_CONNECT=_T("DBQ=alarm-e.mdb;DefaultDir=.;Driver={Microsoft Access Driver (*.mdb)};DriverId=25;FIL=MS Access;FILEDSN=alarm-e.dsn;MaxBufferSize=2048;MaxScanRows=8;PageTimeout=5;PWD=123456;SafeTransactions=0;Threads=3;UID=admin;UserCommitSync=Yes;");
 // 코드 생성 위치 2014년 11월 28일 금요일, 오후 9:44
 IMPLEMENT_DYNAMIC(CcaptureImageDB, CRecordset)
 
@@ -21,7 +21,7 @@ CcaptureImageDB::CcaptureImageDB(CDatabase* pdb)
 // 다른 형식으로 암호를 저장하거나 다른 사용자 인증을 사용하십시오.
 CString CcaptureImageDB::GetDefaultConnect()
 {
-	return _T("DBQ=alarm-e.mdb;DefaultDir=.;Driver={Microsoft Access Driver (*.mdb)};DriverId=25;FIL=MS Access;FILEDSN=alarm-e.dsn;MaxBufferSize=2048;MaxScanRows=8;PageTimeout=5;PWD=123456;SafeTransactions=0;Threads=3;UID=admin;UserCommitSync=Yes;");
+	return DB_CONNECT;
 }
 
 CString CcaptureImageDB::GetDefaultSQL()
@@ -75,7 +75,7 @@ CManager::CManager(CDatabase* pdb)
 // 다른 형식으로 암호를 저장하거나 다른 사용자 인증을 사용하십시오.
 CString CManager::GetDefaultConnect()
 {
-	return _T("DBQ=alarm-e.mdb;DefaultDir=.;Driver={Microsoft Access Driver (*.mdb)};DriverId=25;FIL=MS Access;FILEDSN=alarm-e.dsn;MaxBufferSize=2048;MaxScanRows=8;PageTimeout=5;SafeTransactions=0;Threads=3;UID=admin;PWD=123456;UserCommitSync=Yes;");
+	return DB_CONNECT;
 }
 
 CString CManager::GetDefaultSQL()
@@ -128,7 +128,7 @@ CwordFilter::CwordFilter(CDatabase* pdb)
 // 다른 형식으로 암호를 저장하거나 다른 사용자 인증을 사용하십시오.
 CString CwordFilter::GetDefaultConnect()
 {
-	return _T("DBQ=alarm-e.mdb;DefaultDir=.;Driver={Microsoft Access Driver (*.mdb)};DriverId=25;FIL=MS Access;FILEDSN=alarm-e.dsn;MaxBufferSize=2048;MaxScanRows=8;PageTimeout=5;SafeTransactions=0;Threads=3;UID=admin;PWD=123456;UserCommitSync=Yes;");
+	return DB_CONNECT;
 }
 
 CString CwordFilter::GetDefaultSQL()

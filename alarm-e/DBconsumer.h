@@ -103,7 +103,6 @@ public:
 	// 마법사에서 생성한 가상 함수 재정의
 	public:
 	virtual CString GetDefaultConnect();	// 기본 연결 문자열
-
 	virtual CString GetDefaultSQL(); 	// 레코드 집합의 기본 SQL
 	virtual void DoFieldExchange(CFieldExchange* pFX);	// RFX 지원
 
