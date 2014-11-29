@@ -9,5 +9,5 @@ MaxScanRows=8
 MaxBufferSize=2048
 FIL=MS Access
 DriverId=25
-DefaultDir=C:\Users\Administrator\Documents\Visual Studio 2010\Projects\alarm-e\alarm-e
-DBQ=C:\Users\Administrator\Documents\Visual Studio 2010\Projects\alarm-e\alarm-e\alarm-e.mdb
+DefaultDir=.
+DBQ=alarm-e.mdb

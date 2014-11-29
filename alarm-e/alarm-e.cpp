@@ -6,9 +6,7 @@
 #include "alarm-e.h"
 #include "RegistDlg.h"
 #include "alarm-eDlg.h"
-#include "Manager.h"
-#include "wordFilter.h"
-#include "ScreenShot.h"
+#include "DBconsumer.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -98,19 +96,9 @@ BOOL CalarmeApp::InitInstance()
 	}
 
 	
-	CalarmeDlg dlg;	//이거 트레이아이콘으로 백그라운드처럼 실행해야함
+	CalarmeDlg dlg;
 	m_pMainWnd = &dlg;
 	INT_PTR nResponse = dlg.DoModal();
-	if (nResponse == IDOK)
-	{
-		// TODO: 여기에 [확인]을 클릭하여 대화 상자가 없어질 때 처리할
-		//  코드를 배치합니다.
-	}
-	else if (nResponse == IDCANCEL)
-	{
-		// TODO: 여기에 [취소]를 클릭하여 대화 상자가 없어질 때 처리할
-		//  코드를 배치합니다.
-	}
 
 	// 위에서 만든 셸 관리자를 삭제합니다.
 	if (pShellManager != NULL)

@@ -9,8 +9,7 @@
 #endif
 
 #include "resource.h"		// 주 기호입니다.
-#include "wordfilter.h"	//디비컨슈머 비속어 테이블
-#include "Manager.h"	//디비컨슈머 로그인 테이블
+#include "DBconsumer.h"
 
 // CalarmeApp:
 // 이 클래스의 구현에 대해서는 alarm-e.cpp을 참조하십시오.

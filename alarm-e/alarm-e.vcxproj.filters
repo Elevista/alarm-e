@@ -39,19 +39,13 @@
     <ClInclude Include="Resource.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Manager.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="wordFilter.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="RegistDlg.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="ScreenShot.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="captureImageDB.h">
+    <ClInclude Include="DBconsumer.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -65,19 +59,13 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Manager.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="wordFilter.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="RegistDlg.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="ScreenShot.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="captureImageDB.cpp">
+    <ClCompile Include="DBconsumer.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "captureImageDB.h"
+#include "DBconsumer.h"
 
 class ScreenShot
 {
