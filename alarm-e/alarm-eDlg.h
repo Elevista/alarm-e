@@ -34,4 +34,5 @@ public:
 	void SetTray(void);
 	afx_msg LRESULT TrayMsg(WPARAM wParam, LPARAM lParam);
 	afx_msg void OnDestroy();
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 };

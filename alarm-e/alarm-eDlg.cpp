@@ -103,7 +103,7 @@ BOOL CalarmeDlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// 큰 아이콘을 설정합니다.
 	SetIcon(m_hIcon, FALSE);		// 작은 아이콘을 설정합니다.
 
-	ShowWindow(SW_MINIMIZE);
+	ShowWindow(SW_SHOW);
 	PostMessage (WM_SHOWWINDOW,FALSE, SW_OTHERUNZOOM);
 	// TODO: 여기에 추가 초기화 작업을 추가합니다.
 	SetTray();
@@ -168,6 +168,7 @@ HCURSOR CalarmeDlg::OnQueryDragIcon()
 void CalarmeDlg::OnBnClickedButton1()
 {
 	AfxMessageBox(ScreenShot::capture());
+	ScreenShot::getlastimgfile();
 }
 
 
@@ -205,4 +206,29 @@ void CalarmeDlg::OnDestroy()
 
 	// 작업 표시줄(TaskBar)의 상태 영역에 아이콘을 삭제한다.
 	Shell_NotifyIcon(NIM_DELETE, &nid);
+}
+
+
+BOOL CalarmeDlg::PreTranslateMessage(MSG* pMsg)
+{
+	//키눌린 메시지가 들어올때 esc이거나 return  값이면
+	//걍 리턴 시켜준다.
+	if(pMsg->message == WM_KEYDOWN)
+	{
+		switch(pMsg->wParam)
+		{
+			case VK_ESCAPE:
+			case VK_RETURN:
+			case VK_CANCEL:
+			return TRUE;
+			default:
+			break;
+		}
+	}
+	if(pMsg->message == WM_SYSKEYDOWN)	//알뜨에쁘뽀
+    {
+        if(pMsg->wParam == VK_F4)
+            return TRUE;
+    }
+   return CDialogEx::PreTranslateMessage(pMsg);
 }
