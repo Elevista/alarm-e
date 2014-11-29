@@ -11,7 +11,7 @@
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
-
+#define WM_TRAY_MSG WM_USER+1
 
 // 응용 프로그램 정보에 사용되는 CAboutDlg 대화 상자입니다.
 
@@ -40,7 +40,9 @@ void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 	CDialogEx::DoDataExchange(pDX);
 }
 
+
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
+
 END_MESSAGE_MAP()
 
 
@@ -65,6 +67,8 @@ BEGIN_MESSAGE_MAP(CalarmeDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDC_BUTTON1, &CalarmeDlg::OnBnClickedButton1)
+	ON_MESSAGE(WM_TRAY_MSG,TrayMsg)
+	ON_WM_DESTROY()
 END_MESSAGE_MAP()
 
 
@@ -100,9 +104,9 @@ BOOL CalarmeDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 작은 아이콘을 설정합니다.
 
 	ShowWindow(SW_MINIMIZE);
-
+	PostMessage (WM_SHOWWINDOW,FALSE, SW_OTHERUNZOOM);
 	// TODO: 여기에 추가 초기화 작업을 추가합니다.
-
+	SetTray();
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 }
 
@@ -112,6 +116,10 @@ void CalarmeDlg::OnSysCommand(UINT nID, LPARAM lParam)
 	{
 		CAboutDlg dlgAbout;
 		dlgAbout.DoModal();
+	}
+	else if(nID==SC_MINIMIZE||nID==SC_CLOSE)	//창닫기나 최소화 클릭시 숨기기
+	{
+		ShowWindow(SW_HIDE);
 	}
 	else
 	{
@@ -160,4 +168,41 @@ HCURSOR CalarmeDlg::OnQueryDragIcon()
 void CalarmeDlg::OnBnClickedButton1()
 {
 	AfxMessageBox(ScreenShot::capture());
+}
+
+
+void CalarmeDlg::SetTray()
+{
+	 NOTIFYICONDATA  nid;
+	 nid.cbSize = sizeof(nid);
+	 nid.hWnd = m_hWnd; // 메인 윈도우 핸들
+	 nid.uID = IDR_MAINFRAME;  // 아이콘 리소스 ID
+	 nid.uFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP; // 플래그 설정
+	 nid.uCallbackMessage = WM_TRAY_MSG; // 콜백메시지 설정
+	 nid.hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME); // 아이콘 로드
+	 lstrcpy(nid.szTip, _T("alarm-e 작동중")); 
+	 Shell_NotifyIcon(NIM_ADD, &nid);
+	 SendMessage(WM_SETICON, (WPARAM)TRUE, (LPARAM)nid.hIcon);
+}
+
+
+LRESULT CalarmeDlg::TrayMsg(WPARAM wParam, LPARAM lParam)
+{
+	if(lParam == WM_LBUTTONDBLCLK)
+		ShowWindow(SW_SHOW);
+	return 0;
+}
+
+
+void CalarmeDlg::OnDestroy()
+{
+	CDialogEx::OnDestroy();
+
+	NOTIFYICONDATA  nid;
+	nid.cbSize = sizeof(nid);
+	nid.hWnd = m_hWnd; // 메인 윈도우 핸들
+	nid.uID = IDR_MAINFRAME;
+
+	// 작업 표시줄(TaskBar)의 상태 영역에 아이콘을 삭제한다.
+	Shell_NotifyIcon(NIM_DELETE, &nid);
 }

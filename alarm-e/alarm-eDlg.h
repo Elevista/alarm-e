@@ -31,4 +31,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnBnClickedButton1();
+	void SetTray(void);
+	afx_msg LRESULT TrayMsg(WPARAM wParam, LPARAM lParam);
+	afx_msg void OnDestroy();
 };
