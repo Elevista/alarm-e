@@ -54,6 +54,9 @@
     <ClInclude Include="JSHook.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="MultipartUpload.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="alarm-e.cpp">
@@ -74,7 +77,7 @@
     <ClCompile Include="DBconsumer.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="JSHook.cpp">
+    <ClCompile Include="MultipartUpload.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

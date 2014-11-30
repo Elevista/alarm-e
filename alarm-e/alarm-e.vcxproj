@@ -107,6 +107,7 @@
     <ClInclude Include="alarm-eDlg.h" />
     <ClInclude Include="DBconsumer.h" />
     <ClInclude Include="JSHook.h" />
+    <ClInclude Include="MultipartUpload.h" />
     <ClInclude Include="RegistDlg.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SavingStruct.h" />
@@ -118,7 +119,7 @@
     <ClCompile Include="alarm-e.cpp" />
     <ClCompile Include="alarm-eDlg.cpp" />
     <ClCompile Include="DBconsumer.cpp" />
-    <ClCompile Include="JSHook.cpp" />
+    <ClCompile Include="MultipartUpload.cpp" />
     <ClCompile Include="RegistDlg.cpp" />
     <ClCompile Include="ScreenShot.cpp" />
     <ClCompile Include="stdafx.cpp">

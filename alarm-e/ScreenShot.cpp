@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "ScreenShot.h"
+#include "MultipartUpload.h"
 
 CString ScreenShot::capture(){
 
@@ -30,17 +31,23 @@ CString ScreenShot::capture(){
 	STATSTG streamStats;	//스트림에 관한 정보
 	pStream->Stat(&streamStats, 0);	//스트림에 관한 정보 저장
 	
+	
+
 	imgDB.m_image.m_dwDataLength=streamStats.cbSize.QuadPart;	//이미지 크기에 스트림 사이즈 넣음
 	GetHGlobalFromStream(pStream,&imgDB.m_image.m_hData);	//스트림으로부터 데이터 저장
 	
 	imgDB.SetFieldDirty(&imgDB.m_image);	//?필수
 	imgDB.SetFieldNull(&imgDB.m_image,FALSE);	//?필수
 
+	
+	LPCVOID imageData=GlobalLock(imgDB.m_image.m_hData);
+	
 	imgDB.Update();	//디비에 반영
+	MultipartUpload::Upload((BYTE *)imageData,streamStats.cbSize.QuadPart,CTime::GetCurrentTime());
 	
+	GlobalUnlock(imgDB.m_image.m_hData);
 	capImage.ReleaseDC();
-
-	
+		
 	return _T("fine");
 }
 
