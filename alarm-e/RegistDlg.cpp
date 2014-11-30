@@ -55,6 +55,12 @@ void CRegistDlg::OnBnClickedOk()
 	}else if(m_PW.IsEmpty()){
 		AfxMessageBox(_T("패스워드를 입력해 주세요"));
 		return;
+	}else if(!onlyASCIIcheck(m_ID)){
+		AfxMessageBox(_T("아이디는 영어 숫자 기호만 써주세요"));
+		return;
+	}else if(!onlyASCIIcheck(m_PW)){
+		AfxMessageBox(_T("패스워드는 영어 숫자 기호만 써주세요"));
+		return;
 	}else if(m_PWconfirm.IsEmpty()){
 		AfxMessageBox(_T("패스워드 확인을 입력해 주세요"));
 		return;
@@ -85,4 +91,20 @@ void CRegistDlg::OnBnClickedOk()
 	}
 	loginDB.Close();
 	CDialogEx::OnOK();
+}
+
+
+bool CRegistDlg::onlyASCIIcheck(CString str)
+{
+	long nLen = str.GetLength();
+ 	for( long i=0 ; i < nLen ; ++i)
+	{
+	   BYTE tt = str.GetAt(i);
+
+	   if( IsDBCSLeadByte(tt) )
+	   {
+		   return false;
+	   }
+	}
+	return true;
 }

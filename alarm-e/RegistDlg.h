@@ -23,4 +23,5 @@ public:
 	CString m_ID;
 	CString m_PW;
 	CString m_PWconfirm;
+	bool onlyASCIIcheck(CString str);
 };
