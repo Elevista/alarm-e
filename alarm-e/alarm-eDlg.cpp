@@ -189,8 +189,26 @@ void CalarmeDlg::SetTray()
 
 LRESULT CalarmeDlg::TrayMsg(WPARAM wParam, LPARAM lParam)
 {
+	HWND hWnd=GetSafeHwnd();
+	POINT pos;
+	GetCursorPos(&pos);
 	if(lParam == WM_LBUTTONDBLCLK)
 		ShowWindow(SW_SHOW);
+	else if(lParam==WM_RBUTTONUP){
+		HMENU hMenu = CreatePopupMenu();
+		AppendMenu(hMenu, MF_STRING, WM_ACTIVATE, _T("일단 예시 메뉴1"));
+		AppendMenu(hMenu, MF_STRING, WM_ACTIVATE, _T("일단 예시 메뉴2"));
+		/*
+		if(레지스트리 권한 1)
+			AppendMenu(hMenu, MF_STRING, 사용자 관리자 팝업 메세지, _T("관리자 로그인"));
+		else
+			AppendMenu(hMenu, MF_STRING, 사용자 로그아웃 메세지, _T("관리자 로그아웃"));
+		
+		AppendMenu(hMenu, MF_STRING, 사용자 종료 메세지, _T("종료"));
+		*/
+		SetForegroundWindow();	//생성된 팝업메뉴 밖을 클릭할 때 팝업 닫기
+		TrackPopupMenu(hMenu, TPM_LEFTALIGN | TPM_RIGHTBUTTON,pos.x, pos.y, 0, hWnd, NULL);
+	}
 	return 0;
 }
 
