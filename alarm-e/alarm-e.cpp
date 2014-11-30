@@ -89,7 +89,7 @@ BOOL CalarmeApp::InitInstance()
 	}
 
 	//레지스트리에서 등록된 아이디를 읽어옴.
-	ID=GetProfileStringW(_T("registrant"),_T("ID"),_T("등록없음"));
+	ID=GetProfileString(_T("registrant"),_T("ID"),_T("등록없음"));
 	if(ID.Compare(_T("등록없음"))==0){	//관리자가 등록이 되지 않았단 소리
 		AfxMessageBox(_T("관리자 가입 필수"));
 		return 0;	//고로 끔

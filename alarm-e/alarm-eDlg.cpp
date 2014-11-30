@@ -96,6 +96,13 @@ BOOL CalarmeDlg::OnInitDialog()
 			pSysMenu->AppendMenu(MF_SEPARATOR);
 			pSysMenu->AppendMenu(MF_STRING, IDM_ABOUTBOX, strAboutMenu);
 		}
+		/*
+		2014.11.30 
+		Ole 컨트롤 지원을 위해.		
+		*/
+	AfxEnableControlContainer(); 
+	if(!AfxOleInit()) return false;
+	
 	}
 
 	// 이 대화 상자의 아이콘을 설정합니다. 응용 프로그램의 주 창이 대화 상자가 아닐 경우에는
@@ -225,6 +232,7 @@ void CalarmeDlg::OnDestroy()
 	// 작업 표시줄(TaskBar)의 상태 영역에 아이콘을 삭제한다.
 	Shell_NotifyIcon(NIM_DELETE, &nid);
 }
+
 
 
 BOOL CalarmeDlg::PreTranslateMessage(MSG* pMsg)

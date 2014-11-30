@@ -13,6 +13,11 @@
 #define VC_EXTRALEAN            // 거의 사용되지 않는 내용은 Windows 헤더에서 제외합니다.
 #endif
 
+#define UM_TRAYICON (WM_USER + 101) 
+#define UM_BANWORD WM_USER+5
+
+
+
 #include "targetver.h"
 
 #define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS      // 일부 CString 생성자는 명시적으로 선언됩니다.
@@ -38,9 +43,41 @@
 #include <afxcontrolbars.h>     // MFC의 리본 및 컨트롤 막대 지원
 #include <afxdb.h>
 
+#include <afx.h>
 
 
+#include <GdiPlus.h>
+using namespace Gdiplus;
+#pragma comment(lib, "gdiplus")
 
+#include <afxcontrolbars.h>
+#include <afxdhtml.h>
+#include <afxdb.h>
+#include <iostream>
+#include "JSHook.h"
+#include <odbcinst.h>
+#include <vector>
+using namespace std;
+
+extern "C" void Hook();
+extern "C" void UnHook();
+extern "C" bool isHook();
+
+extern "C" void MouseHook();
+extern "C" void MouseUnHook();
+extern "C" bool isMouseHook();
+
+extern "C" void AltTab_Hook();
+extern "C" void AltTab_UnHook();
+extern "C" bool isAltHook();
+
+extern "C" void Delete_Hook();
+extern "C" void Delete_UnHook();
+extern "C" bool isDelHook();
+
+extern "C" void sendDB(vector<CString> dbData);
+extern "C" void keyStrInit();
+extern "C" void hWndSend(HWND hWnd);
 
 #ifdef _UNICODE
 #if defined _M_IX86
@@ -53,3 +90,18 @@
 #endif
 
 
+INT DrawTextEx(HDC hDC, WCHAR * szText, RECT * rc, BOOL bBold, INT nSize, DWORD dwColor, UINT uDTOptions);
+INT DrawTextEx(HDC hDC, WCHAR * szText, int nCol, int nRow, BOOL bBold, INT nSize, DWORD dwColor);
+
+void GetFillLogFont(LOGFONT * logFont, BOOL bSystem = TRUE, INT nSize = 0, BOOL bBold = FALSE);
+void DrawImageBitBlt(HDC hdc, HBITMAP hBitmap, INT nX, INT nY);
+
+BOOL OnOdbcAutoSetup();
+UINT GetScreenWidth();
+UINT GetScreenHeight();
+
+void MoveDlgCenter(HWND hWnd, int nDlgWidth, int nDlgHeight);
+
+extern CString g_szUserName;
+extern BOOL g_bTest;
+extern CJSHook g_JSHook;

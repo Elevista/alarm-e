@@ -48,6 +48,12 @@
     <ClInclude Include="DBconsumer.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="SavingStruct.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="JSHook.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="alarm-e.cpp">
@@ -66,6 +72,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="DBconsumer.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="JSHook.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
