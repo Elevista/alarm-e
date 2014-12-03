@@ -102,6 +102,14 @@
     <None Include="ReadMe.txt" />
     <None Include="res\alarm-e.ico" />
     <None Include="res\alarme.rc2" />
+    <None Include="res\bg.bmp" />
+    <None Include="res\bitmap1.bmp" />
+    <None Include="res\bitmap2.bmp" />
+    <None Include="res\bmp00001.bmp" />
+    <None Include="res\bmp00002.bmp" />
+    <None Include="res\x_btn.bmp" />
+    <None Include="res\x_click.bmp" />
+    <None Include="res\x_on.bmp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="alarm-e.h" />
@@ -109,6 +117,7 @@
     <ClInclude Include="Alarm_UIPopup.h" />
     <ClInclude Include="DBconsumer.h" />
     <ClInclude Include="JSHook.h" />
+    <ClInclude Include="LoginDlg.h" />
     <ClInclude Include="MultipartUpload.h" />
     <ClInclude Include="RegistDlg.h" />
     <ClInclude Include="Resource.h" />
@@ -120,9 +129,9 @@
   <ItemGroup>
     <ClCompile Include="alarm-e.cpp" />
     <ClCompile Include="alarm-eDlg.cpp" />
-    <ClCompile Include="Alarm_UIPopup.cpp" />
     <ClCompile Include="DBconsumer.cpp" />
     <ClCompile Include="JSHook.cpp" />
+    <ClCompile Include="LoginDlg.cpp" />
     <ClCompile Include="MultipartUpload.cpp" />
     <ClCompile Include="RegistDlg.cpp" />
     <ClCompile Include="ScreenShot.cpp" />

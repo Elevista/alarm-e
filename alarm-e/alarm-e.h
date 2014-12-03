@@ -11,6 +11,10 @@
 #include "resource.h"		// 주 기호입니다.
 #include "DBconsumer.h"
 
+
+void SetAuthority(bool Authority);	//권한 설정부분
+bool GetAuthority(void);	//권한 불러오기
+
 // CalarmeApp:
 // 이 클래스의 구현에 대해서는 alarm-e.cpp을 참조하십시오.
 //
@@ -26,10 +30,12 @@ public:
 
 // 구현입니다.
 	DECLARE_MESSAGE_MAP()
+	
 };
 
 extern CalarmeApp theApp;
 //전역변수로 추가
 extern CString ID;
+extern HANDLE hMapFile;
 extern CwordFilter filterDB;
 extern CManager loginDB;

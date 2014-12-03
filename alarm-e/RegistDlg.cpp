@@ -84,7 +84,7 @@ void CRegistDlg::OnBnClickedOk()
 		loginDB.Update();	//커밋
 		//레지스트리에 등록
 		theApp.WriteProfileString(_T("registrant"), _T("ID"), m_ID);
-		theApp.WriteProfileInt( _T("authority"), _T("power"), 1); //로그인 상태
+		::SetAuthority(true);//로그인 상태
 	}else{
 		loginDB.Close();
 		return;

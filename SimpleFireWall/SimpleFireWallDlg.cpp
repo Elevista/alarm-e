@@ -177,19 +177,30 @@ int CSimpleFireWallDlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	DWORD dwSize = 16;
 	HKEY hKey;
 	TCHAR szBuffer[16] = { '\0', };
-	BOOL auth = false;
-	LONG lResult = RegOpenKeyEx(HKEY_CURRENT_USER, _T("Software\\Alarm-e\\Alarm-e v1.0\\authority"), 0, KEY_READ, &hKey);
+	bool auth = false;
+	//LONG lResult = RegOpenKeyEx(HKEY_CURRENT_USER, _T("Software\\Alarm-e\\Alarm-e v1.0\\authority"), 0, KEY_READ, &hKey);
 	m_forwardIp = "127.0.0.1";
 	GetWindowsDirectory(windir,MAX_PATH);
-	
 	m_hostsPath.Format(_T("%s\\System32\\drivers\\etc\\hosts"),windir);
-	m_fakeHostsPath.Format(_T("%s\\System32\\drivers\\etc\\hosts.temp"),windir);
+	m_fakeHostsPath.Format(_T("%s\\System32\\drivers\\etc\\hosts.temp"),windir);/*
 	if (ERROR_SUCCESS == lResult)
 	{
 		RegQueryValueEx(hKey, _T("power"), NULL, &dwType, (LPBYTE)szBuffer, &dwSize);
 		RegCloseKey(hKey);
 		auth = szBuffer[0];
-	}
+	}*/
+
+
+
+
+	HANDLE hMapFile;
+	//메모리 매핑 생성 이름은 Alarme_authority
+	hMapFile=CreateFileMapping(INVALID_HANDLE_VALUE,NULL,PAGE_READWRITE,0,sizeof(bool),_T("Alarme_authority"));
+	//권한을 저장할 메모리맵의 포인터를 받아옴
+	bool* authority=(bool*)MapViewOfFile(hMapFile,FILE_MAP_ALL_ACCESS,0,0,sizeof(bool));
+	memcpy(&auth,authority,sizeof(bool));//권한을 읽어옴.
+	UnmapViewOfFile(authority);//파일 해제
+
 
 	//로그인 유무 확인 Reg - end
 

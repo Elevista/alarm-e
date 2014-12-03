@@ -1,3 +1,7 @@
+#pragma comment (lib,"d3d9.lib")
+#pragma comment (lib,"d3dx9.lib")
+#pragma comment (lib,"winmm.lib")
+
 #include "stdafx.h"
 #include "Alarm-e.h"
 #include "Alarm_UIPopup.h"
@@ -264,6 +268,7 @@ void CAlarm_UIPopup::OnPaint()
 	CDC MemDC;
 	MemDC.CreateCompatibleDC(&dc);
 	MemDC.SelectObject(&hBitmap);
+	
 	DrawImageBitBlt(dc.m_hDC, hBitmap, 0, 0);
 	hBitmap = LoadBitmap(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDB_BITMAP_POPUP1));
 	DrawImageBitBlt(dc.m_hDC, hBitmap, 0, 0);
@@ -327,6 +332,7 @@ void CAlarm_UIPopup::OnTimer(UINT_PTR nIDEvent)
 			szTemp  = m_szOutputMSG.Mid(0, 19);
 			szTemp2 = m_szOutputMSG.Mid(19, 19);
 			szTemp3 = m_szOutputMSG.Mid(38, 19);
+
 			DrawTextEx(pDC->m_hDC, szTemp.GetBuffer(0), &rc2, TRUE, 25, BLACKNESS, DT_VCENTER | DT_CENTER);
 
 			DrawTextEx(pDC->m_hDC, szTemp2.GetBuffer(0), &rc, TRUE, 25, BLACKNESS, DT_VCENTER | DT_CENTER);

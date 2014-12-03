@@ -7,11 +7,16 @@
 #include "alarm-eDlg.h"
 #include "afxdialogex.h"
 #include "ScreenShot.h"
+#include "LoginDlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 #define WM_TRAY_MSG WM_USER+1
+#define WM_DLGSHOW WM_USER+2
+#define WM_LOGIN WM_USER+3
+#define WM_LOGOUT WM_USER+4
+#define WM_CLOSEDLG WM_USER+5
 
 // 응용 프로그램 정보에 사용되는 CAboutDlg 대화 상자입니다.
 
@@ -60,6 +65,8 @@ CalarmeDlg::CalarmeDlg(CWnd* pParent /*=NULL*/)
 void CalarmeDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_CLOSE, m_btnX);
+	DDX_Control(pDX, IDC_CLOSE, m_btnX);
 }
 
 BEGIN_MESSAGE_MAP(CalarmeDlg, CDialogEx)
@@ -68,7 +75,13 @@ BEGIN_MESSAGE_MAP(CalarmeDlg, CDialogEx)
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDC_BUTTON1, &CalarmeDlg::OnBnClickedButton1)
 	ON_MESSAGE(WM_TRAY_MSG,TrayMsg)
+	ON_COMMAND(WM_LOGIN,Login)
+	ON_COMMAND(WM_LOGOUT,Logout)
+	ON_COMMAND(WM_DLGSHOW,ShowDlg)
+	ON_COMMAND(WM_CLOSE,ColseDlg)
 	ON_WM_DESTROY()
+	ON_BN_CLICKED(IDC_CLOSE, &CalarmeDlg::OnBnClickedClose)
+	ON_WM_LBUTTONDOWN()
 END_MESSAGE_MAP()
 
 
@@ -77,7 +90,18 @@ END_MESSAGE_MAP()
 BOOL CalarmeDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
+	//SetWindowPos(NULL, 0, 0, 687, 544, SWP_NOMOVE);
+	
 
+	//테스트용
+	//::SetAuthority(true);
+
+
+	//x버튼 이미지 설정
+	m_btnX.LoadBitmaps(IDB_X_BTN,IDB_X_CLICK,IDB_X_BTN,IDB_X_BTN);
+	m_btnX.SizeToContent();
+
+	SetBackgroundImage(IDB_BG,BACKGR_TOPLEFT);
 	// 시스템 메뉴에 "정보..." 메뉴 항목을 추가합니다.
 
 	// IDM_ABOUTBOX는 시스템 명령 범위에 있어야 합니다.
@@ -199,20 +223,19 @@ LRESULT CalarmeDlg::TrayMsg(WPARAM wParam, LPARAM lParam)
 	HWND hWnd=GetSafeHwnd();
 	POINT pos;
 	GetCursorPos(&pos);
-	if(lParam == WM_LBUTTONDBLCLK)
-		ShowWindow(SW_SHOW);
+	if(lParam==WM_LBUTTONDBLCLK){	//로그인된 상태에서 더블클릭시 창띄움
+		if(::GetAuthority())ShowWindow(SW_SHOW);
+	}
 	else if(lParam==WM_RBUTTONUP){
 		HMENU hMenu = CreatePopupMenu();
-		AppendMenu(hMenu, MF_STRING, WM_ACTIVATE, _T("일단 예시 메뉴1"));
-		AppendMenu(hMenu, MF_STRING, WM_ACTIVATE, _T("일단 예시 메뉴2"));
-		/*
-		if(레지스트리 권한 1)
-			AppendMenu(hMenu, MF_STRING, 사용자 관리자 팝업 메세지, _T("관리자 로그인"));
+		if(::GetAuthority()){//로그인 된 상태면
+			AppendMenu(hMenu, MF_STRING, WM_DLGSHOW, _T("설정"));
+			AppendMenu(hMenu, MF_STRING, WM_LOGOUT, _T("관리자 로그아웃"));
+			AppendMenu(hMenu, MF_STRING, WM_CLOSE, _T("프로그램 종료"));
+		}
 		else
-			AppendMenu(hMenu, MF_STRING, 사용자 로그아웃 메세지, _T("관리자 로그아웃"));
+			AppendMenu(hMenu, MF_STRING, WM_LOGIN, _T("관리자 로그인"));
 		
-		AppendMenu(hMenu, MF_STRING, 사용자 종료 메세지, _T("종료"));
-		*/
 		SetForegroundWindow();	//생성된 팝업메뉴 밖을 클릭할 때 팝업 닫기
 		TrackPopupMenu(hMenu, TPM_LEFTALIGN | TPM_RIGHTBUTTON,pos.x, pos.y, 0, hWnd, NULL);
 	}
@@ -231,6 +254,7 @@ void CalarmeDlg::OnDestroy()
 
 	// 작업 표시줄(TaskBar)의 상태 영역에 아이콘을 삭제한다.
 	Shell_NotifyIcon(NIM_DELETE, &nid);
+	CloseHandle(hMapFile);
 }
 
 
@@ -257,4 +281,50 @@ BOOL CalarmeDlg::PreTranslateMessage(MSG* pMsg)
             return TRUE;
     }
    return CDialogEx::PreTranslateMessage(pMsg);
+}
+
+
+void CalarmeDlg::Login(void)
+{
+	CLoginDlg dlg;	//로그인 다이얼로그 생성
+	dlg.DoModal();	//로그인 창에서 로그인 성공하면
+	if(GetAuthority())ShowWindow(SW_SHOW);//메인화면 보이기
+}
+
+
+void CalarmeDlg::Logout(void)
+{
+	ShowWindow(SW_HIDE);
+	::SetAuthority(false);
+	AfxMessageBox(_T("로그아웃 되었습니다"));
+}
+
+
+void CalarmeDlg::ShowDlg(void)
+{
+	ShowWindow(SW_SHOW);
+}
+
+
+void CalarmeDlg::ColseDlg(void)
+{
+	CDialogEx::OnCancel();
+}
+
+
+void CalarmeDlg::OnBnClickedClose()
+{
+	ShowWindow(SW_HIDE);
+}
+
+
+void CalarmeDlg::OnLButtonDown(UINT nFlags, CPoint point)
+{
+	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+	int height=30;//타이틀바 두께
+	int width=641;//창닫기 버튼을 제외한 타이틀바 넓이
+	if(point.x<=width&&point.y<=height)
+		SendMessage( WM_NCLBUTTONDOWN, HTCAPTION, 0 );	//타이틀바 릭한걸로 속임
+
+	CDialogEx::OnLButtonDown(nFlags, point);
 }

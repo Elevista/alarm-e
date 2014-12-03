@@ -48,13 +48,15 @@ void CLoginDlg::OnBnClickedOk()
 		AfxMessageBox(_T("DB파일 열기 실패"));
 		return;
 	}
-	
-	
-	if(m_PW.Compare((CString)loginDB.m_PW)!=0){
-		WriteProfileInt( _T("authority"), _T("power"), 0);
+	if(m_PW.Compare((CString)loginDB.m_PW)==0){	//패스워드가 맞으면
+		::SetAuthority(true);	//관리자임
+		AfxMessageBox(_T("관리자 로그인 되었습니다."));
+		loginDB.Close();
+	}else{
+		AfxMessageBox(_T("비밀번호가 틀렸습니다."));
+		loginDB.Close();
+		return;
 	}
-	
-	loginDB.Close();
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+
 	CDialogEx::OnOK();
 }

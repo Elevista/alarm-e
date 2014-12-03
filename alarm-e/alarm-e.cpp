@@ -37,6 +37,7 @@ CalarmeApp::CalarmeApp()
 CalarmeApp theApp;
 CManager loginDB;
 CwordFilter filterDB;	//전역
+HANDLE hMapFile;//전역
 CString ID;	//전역
 
 // CalarmeApp 초기화
@@ -70,11 +71,11 @@ BOOL CalarmeApp::InitInstance()
 	// TODO: 이 문자열을 회사 또는 조직의 이름과 같은
 	// 적절한 내용으로 수정해야 합니다.
 	
+	/*
 	SetRegistryKey(_T("Alarm-e"));	//Software 폴더아래 폴더이름
 	free( ( void* )m_pszProfileName );
 	m_pszProfileName = _tcsdup(_T("Alarm-e v1.0")) ;	//Alarm-e폴더아래의 폴더
-	//실행시 무조건 권한 0으로. 0은 유저 1은 관리자.
-	WriteProfileInt( _T("authority"), _T("power"), 0);	//저장할 폴더,값이름,값
+	*/
 
 
 	if(!loginDB.Open()){	//DB파일 열기 실패시
@@ -89,6 +90,7 @@ BOOL CalarmeApp::InitInstance()
 		CRegistDlg rdlg;	//회원가입 다이얼로그
 		INT_PTR nResponse=rdlg.DoModal();
 	}
+	if(loginDB.IsOpen())loginDB.Close();
 	
 
 	//레지스트리에서 등록된 아이디를 읽어옴.
@@ -114,3 +116,27 @@ BOOL CalarmeApp::InitInstance()
 	return FALSE;
 }
 
+
+
+void SetAuthority(bool Authority)//권한 설정. true=관리자,false=유저.
+{
+	if(hMapFile==NULL){
+		//전역변수에 메모리 매핑 생성 이름은 Alarme_authority
+		hMapFile=CreateFileMapping(INVALID_HANDLE_VALUE,NULL,PAGE_READWRITE,0,sizeof(bool),_T("Alarme_authority"));
+	}
+	//권한을 저장할 메모리맵의 포인터를 받아옴
+	bool* auth=(bool*)MapViewOfFile(hMapFile,FILE_MAP_ALL_ACCESS,0,0,sizeof(bool));
+	memcpy(auth,&Authority,sizeof(bool));	//메모리에 값쓰기
+	UnmapViewOfFile(auth);//파일닫기
+	//핸들 닫기는 alarm-eDlg destroy할때. 핸들닫으면 메모리에서 사라짐
+}
+
+
+bool GetAuthority(void)
+{
+	if(hMapFile==NULL) return false;
+	bool Authority(false);
+	bool* auth=(bool*)MapViewOfFile(hMapFile,FILE_MAP_ALL_ACCESS,0,0,sizeof(bool));
+	memcpy(&Authority,auth,sizeof(bool));	//메모리에 값읽어오기
+	return Authority;
+}

@@ -22,6 +22,30 @@
     <None Include="res\alarm-e.ico">
       <Filter>리소스 파일</Filter>
     </None>
+    <None Include="res\bg.bmp">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="res\x_btn.bmp">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="res\x_click.bmp">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="res\x_on.bmp">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="res\bitmap1.bmp">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="res\bitmap2.bmp">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="res\bmp00001.bmp">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="res\bmp00002.bmp">
+      <Filter>리소스 파일</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="alarm-e.h">
@@ -60,6 +84,9 @@
     <ClInclude Include="Alarm_UIPopup.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="LoginDlg.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="alarm-e.cpp">
@@ -86,7 +113,7 @@
     <ClCompile Include="JSHook.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Alarm_UIPopup.cpp">
+    <ClCompile Include="LoginDlg.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

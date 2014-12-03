@@ -3,6 +3,8 @@
 //
 
 #pragma once
+#include "afxwin.h"
+#include "afxext.h"
 
 
 // CalarmeDlg 대화 상자
@@ -35,4 +37,12 @@ public:
 	afx_msg LRESULT TrayMsg(WPARAM wParam, LPARAM lParam);
 	afx_msg void OnDestroy();
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
+	void Login(void);
+	void Logout(void);
+	void ShowDlg(void);
+	void ColseDlg(void);
+	afx_msg void OnBnClickedClose();
+	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+
+	CBitmapButton m_btnX;
 };
