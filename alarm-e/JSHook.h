@@ -39,7 +39,7 @@ public:
 	CTime Time_UsingTotal(void);
 	CTime m_TimeStart;
 
-	HWND BlockSites(CList<CString,CString*> blockList);
+	HWND BlockSites(CList<CString,CString&> blockList);
 	CList<CString,CString&> BlockingList;
 
 	void AddBlockURL(CString m_URL);

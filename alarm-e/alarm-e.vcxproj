@@ -53,6 +53,7 @@
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -105,6 +106,7 @@
   <ItemGroup>
     <ClInclude Include="alarm-e.h" />
     <ClInclude Include="alarm-eDlg.h" />
+    <ClInclude Include="Alarm_UIPopup.h" />
     <ClInclude Include="DBconsumer.h" />
     <ClInclude Include="JSHook.h" />
     <ClInclude Include="MultipartUpload.h" />
@@ -118,7 +120,9 @@
   <ItemGroup>
     <ClCompile Include="alarm-e.cpp" />
     <ClCompile Include="alarm-eDlg.cpp" />
+    <ClCompile Include="Alarm_UIPopup.cpp" />
     <ClCompile Include="DBconsumer.cpp" />
+    <ClCompile Include="JSHook.cpp" />
     <ClCompile Include="MultipartUpload.cpp" />
     <ClCompile Include="RegistDlg.cpp" />
     <ClCompile Include="ScreenShot.cpp" />
@@ -129,6 +133,13 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="alarm-e.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

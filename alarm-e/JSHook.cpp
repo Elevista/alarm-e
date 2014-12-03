@@ -332,7 +332,7 @@ CTime CJSHook::Time_UsingTotal(void)
 	return timeTotal;
 }
 
-HWND CJSHook::BlockSites(CList<CString,CString*> blockList)
+HWND CJSHook::BlockSites(CList<CString,CString&> blockList)
 {
 	int nItems = Active_List_Browser.GetCount();
 	int nBlocks = blockList.GetCount();

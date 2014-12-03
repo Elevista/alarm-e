@@ -57,6 +57,9 @@
     <ClInclude Include="MultipartUpload.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Alarm_UIPopup.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="alarm-e.cpp">
@@ -78,6 +81,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="MultipartUpload.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="JSHook.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Alarm_UIPopup.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
