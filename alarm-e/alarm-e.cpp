@@ -85,21 +85,22 @@ BOOL CalarmeApp::InitInstance()
 	
 
 	if(loginDB.GetRecordCount()==0){	//아이디가 생성되어있지 않음
-		loginDB.Close();
 		AfxMessageBox(_T("첫 실행시 아이디 암호 생성"));
 		CRegistDlg rdlg;	//회원가입 다이얼로그
 		INT_PTR nResponse=rdlg.DoModal();
+	}else{
+		ID=loginDB.m_ID;
 	}
 	if(loginDB.IsOpen())loginDB.Close();
 	
 
-	//레지스트리에서 등록된 아이디를 읽어옴.
-	ID=GetProfileString(_T("registrant"),_T("ID"),_T("등록없음"));
-	if(ID.Compare(_T("등록없음"))==0){	//관리자가 등록이 되지 않았단 소리
+	loginDB.Open();
+	if(loginDB.GetRecordCount()==0){	//관리자가 등록이 되지 않았단 소리
 		AfxMessageBox(_T("관리자 가입 필수"));
+		loginDB.Close();
 		return 0;	//고로 끔
 	}
-
+	if(loginDB.IsOpen())loginDB.Close();
 	
 	CalarmeDlg dlg;
 	m_pMainWnd = &dlg;
