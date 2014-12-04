@@ -71,11 +71,11 @@ BOOL CalarmeApp::InitInstance()
 	// TODO: 이 문자열을 회사 또는 조직의 이름과 같은
 	// 적절한 내용으로 수정해야 합니다.
 	
-	/*
+	
 	SetRegistryKey(_T("Alarm-e"));	//Software 폴더아래 폴더이름
 	free( ( void* )m_pszProfileName );
 	m_pszProfileName = _tcsdup(_T("Alarm-e v1.0")) ;	//Alarm-e폴더아래의 폴더
-	*/
+	
 
 
 	if(!loginDB.Open()){	//DB파일 열기 실패시
@@ -85,16 +85,17 @@ BOOL CalarmeApp::InitInstance()
 	
 
 	if(loginDB.GetRecordCount()==0){	//아이디가 생성되어있지 않음
+		loginDB.Close();
 		AfxMessageBox(_T("첫 실행시 아이디 암호 생성"));
 		CRegistDlg rdlg;	//회원가입 다이얼로그
 		INT_PTR nResponse=rdlg.DoModal();
 	}else{
 		ID=loginDB.m_ID;
+		loginDB.Close();
 	}
-	if(loginDB.IsOpen())loginDB.Close();
 	
-
-	loginDB.Open();
+	
+	if(!loginDB.IsOpen())loginDB.Open();	
 	if(loginDB.GetRecordCount()==0){	//관리자가 등록이 되지 않았단 소리
 		AfxMessageBox(_T("관리자 가입 필수"));
 		loginDB.Close();
