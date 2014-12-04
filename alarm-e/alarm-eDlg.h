@@ -5,7 +5,7 @@
 #pragma once
 #include "afxwin.h"
 #include "afxext.h"
-
+#include "WordFilterDlg.h"
 
 // CalarmeDlg 대화 상자
 class CalarmeDlg : public CDialogEx
@@ -45,4 +45,7 @@ public:
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 
 	CBitmapButton m_btnX;
+	afx_msg void OnBnClickedWordFilter();
+	void SwitchChildDlg(int num);
+	CWordFilterDlg wordFilterDlg;
 };

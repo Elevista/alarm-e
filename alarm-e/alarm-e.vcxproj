@@ -125,6 +125,7 @@
     <ClInclude Include="ScreenShot.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="WordFilterDlg.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="alarm-e.cpp" />
@@ -139,6 +140,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="WordFilterDlg.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="alarm-e.rc" />

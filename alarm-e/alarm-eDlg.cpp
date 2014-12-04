@@ -82,6 +82,7 @@ BEGIN_MESSAGE_MAP(CalarmeDlg, CDialogEx)
 	ON_WM_DESTROY()
 	ON_BN_CLICKED(IDC_CLOSE, &CalarmeDlg::OnBnClickedClose)
 	ON_WM_LBUTTONDOWN()
+	ON_BN_CLICKED(IDC_WORD_FILTER, &CalarmeDlg::OnBnClickedWordFilter)
 END_MESSAGE_MAP()
 
 
@@ -90,12 +91,20 @@ END_MESSAGE_MAP()
 BOOL CalarmeDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
-	//SetWindowPos(NULL, 0, 0, 687, 544, SWP_NOMOVE);
-	
 
 	//테스트용
 	//::SetAuthority(true);
 
+	//자식 다이얼로그 위치 크기 일괄 지정부분
+	int childX,childY,childW,childH;
+	childX=30;	//x좌표
+	childY=120;	//y좌표
+	childW=625;	//넓이
+	childH=366;	//높이
+	//자식 다이얼로그 추가부분. 표시는 SwitchChildDlg함수로
+	wordFilterDlg.Create(CWordFilterDlg::IDD,this);
+	wordFilterDlg.MoveWindow(childX,childY,childW,childH);
+	
 
 	//x버튼 이미지 설정
 	m_btnX.LoadBitmaps(IDB_X_BTN,IDB_X_CLICK,IDB_X_BTN,IDB_X_BTN);
@@ -327,4 +336,23 @@ void CalarmeDlg::OnLButtonDown(UINT nFlags, CPoint point)
 		SendMessage( WM_NCLBUTTONDOWN, HTCAPTION, 0 );	//타이틀바 릭한걸로 속임
 
 	CDialogEx::OnLButtonDown(nFlags, point);
+}
+
+
+void CalarmeDlg::OnBnClickedWordFilter()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	SwitchChildDlg(1);
+}
+
+
+void CalarmeDlg::SwitchChildDlg(int num)
+{
+	//모든 자식 다이얼로그를 숨긴후에
+	wordFilterDlg.ShowWindow(SW_HIDE);
+
+	//선택한 다이얼로그만 표시.
+	switch(num){
+		case 1:wordFilterDlg.ShowWindow(SW_SHOW);break;
+	}
 }
