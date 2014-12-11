@@ -2,8 +2,7 @@
 #include "ScreenShot.h"
 #include "MultipartUpload.h"
 
-CString ScreenShot::capture(){
-
+UINT ScreenShot::DoInBG(LPVOID pParam){
 	CImage capImage;
 	HDC windowDC = ::GetWindowDC(NULL); //현재 윈도우의 DC를 가져옴
 
@@ -47,8 +46,15 @@ CString ScreenShot::capture(){
 	
 	GlobalUnlock(imgDB.m_image.m_hData);
 	capImage.ReleaseDC();
+
+	return 0;
+}
+
+CString ScreenShot::capture(){
+
+	AfxBeginThread(DoInBG,NULL);
 		
-	return _T("fine");
+	return _T("백그라운드 쓰레드 생성");
 }
 
 CImage ScreenShot::getlastimg(){

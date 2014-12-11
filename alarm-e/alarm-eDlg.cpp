@@ -333,7 +333,7 @@ void CalarmeDlg::OnLButtonDown(UINT nFlags, CPoint point)
 	int height=30;//타이틀바 두께
 	int width=641;//창닫기 버튼을 제외한 타이틀바 넓이
 	if(point.x<=width&&point.y<=height)
-		SendMessage( WM_NCLBUTTONDOWN, HTCAPTION, 0 );	//타이틀바 릭한걸로 속임
+		SendMessage( WM_NCLBUTTONDOWN, HTCAPTION, 0 );	//타이틀바 클릭한걸로 속임
 
 	CDialogEx::OnLButtonDown(nFlags, point);
 }
