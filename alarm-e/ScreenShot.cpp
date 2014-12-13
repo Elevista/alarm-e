@@ -1,60 +1,72 @@
 #include "StdAfx.h"
 #include "ScreenShot.h"
 #include "MultipartUpload.h"
+#include "RegManager.h"
 
+static int freq;
+static bool loop;
+static bool running=false;
 UINT ScreenShot::DoInBG(LPVOID pParam){
-	CImage capImage;
-	HDC windowDC = ::GetWindowDC(NULL); //현재 윈도우의 DC를 가져옴
+	running=true;
+	while(loop){
+		CImage capImage;
+		HDC windowDC = ::GetWindowDC(NULL); //현재 윈도우의 DC를 가져옴
 
-	CRect rect;
-	::GetWindowRect(GetDesktopWindow(), &rect); //데스크탑 윈도의 크기를 rect에 저장
+		CRect rect;
+		::GetWindowRect(GetDesktopWindow(), &rect); //데스크탑 윈도의 크기를 rect에 저장
 
-	capImage.Create(rect.Width(), rect.Height(), 32);	//윈도 화면 크기로 CImage생성.
+		capImage.Create(rect.Width(), rect.Height(), 32);	//윈도 화면 크기로 CImage생성.
 
-	HDC capimgDC = capImage.GetDC();	//캡쳐 이미지의 DC
+		HDC capimgDC = capImage.GetDC();	//캡쳐 이미지의 DC
 
-	//캡쳐 이미지 DC에 화면 해상도 크기로 현재 윈도우DC를 복사.
-	BitBlt(capimgDC, 0, 0, rect.Width(), rect.Height(), windowDC, 0, 0, SRCCOPY);
+		//캡쳐 이미지 DC에 화면 해상도 크기로 현재 윈도우DC를 복사.
+		BitBlt(capimgDC, 0, 0, rect.Width(), rect.Height(), windowDC, 0, 0, SRCCOPY);
 
-	CcaptureImageDB imgDB;
-	imgDB.Open();	//디비를 열고
-	imgDB.AddNew();	//새 레코드 생성
-	imgDB.m_datetime=CTime::GetCurrentTime();	//현재 시간 넣고
-
-	
-	IStream* pStream = NULL;	//스트림 생성
-	CreateStreamOnHGlobal(0, TRUE,   &pStream);	//스트림 초기화
-	capImage.Save(pStream, Gdiplus::ImageFormatJPEG);	//스트림에 이미지 지정
-	
-	
-	STATSTG streamStats;	//스트림에 관한 정보
-	pStream->Stat(&streamStats, 0);	//스트림에 관한 정보 저장
-	
-	
-
-	imgDB.m_image.m_dwDataLength=streamStats.cbSize.QuadPart;	//이미지 크기에 스트림 사이즈 넣음
-	GetHGlobalFromStream(pStream,&imgDB.m_image.m_hData);	//스트림으로부터 데이터 저장
-	
-	imgDB.SetFieldDirty(&imgDB.m_image);	//?필수
-	imgDB.SetFieldNull(&imgDB.m_image,FALSE);	//?필수
+		CcaptureImageDB imgDB;
+		imgDB.Open();	//디비를 열고
+		imgDB.AddNew();	//새 레코드 생성
+		imgDB.m_datetime=CTime::GetCurrentTime();	//현재 시간 넣고
 
 	
-	LPCVOID imageData=GlobalLock(imgDB.m_image.m_hData);
+		IStream* pStream = NULL;	//스트림 생성
+		CreateStreamOnHGlobal(0, TRUE,   &pStream);	//스트림 초기화
+		capImage.Save(pStream, Gdiplus::ImageFormatJPEG);	//스트림에 이미지 지정
 	
-	imgDB.Update();	//디비에 반영
-	MultipartUpload::Upload((BYTE *)imageData,streamStats.cbSize.QuadPart,CTime::GetCurrentTime());
 	
-	GlobalUnlock(imgDB.m_image.m_hData);
-	capImage.ReleaseDC();
+		STATSTG streamStats;	//스트림에 관한 정보
+		pStream->Stat(&streamStats, 0);	//스트림에 관한 정보 저장
+	
+	
 
+		imgDB.m_image.m_dwDataLength=streamStats.cbSize.QuadPart;	//이미지 크기에 스트림 사이즈 넣음
+		GetHGlobalFromStream(pStream,&imgDB.m_image.m_hData);	//스트림으로부터 데이터 저장
+	
+		imgDB.SetFieldDirty(&imgDB.m_image);	//?필수
+		imgDB.SetFieldNull(&imgDB.m_image,FALSE);	//?필수
+
+	
+		LPVOID imageData=GlobalLock(imgDB.m_image.m_hData);
+	
+		imgDB.Update();	//디비에 반영
+		MultipartUpload::Upload((BYTE *)imageData,streamStats.cbSize.QuadPart);	//따로 쓰레드로 돌아감
+	
+		GlobalUnlock(imgDB.m_image.m_hData);
+		capImage.ReleaseDC();
+		getlastimgfile();
+		for(int i=0;i<freq;i++){	//대기중 매초마다 쓰레드 종료할지 검사
+			if(!loop) {running=false;return 4;}
+			Sleep(1000);
+		}
+		
+	}
+	running=false;
 	return 0;
 }
 
-CString ScreenShot::capture(){
-
-	AfxBeginThread(DoInBG,NULL);
-		
-	return _T("백그라운드 쓰레드 생성");
+void ScreenShot::start(){
+	loop=CRegManager::GetScreenShotVal();
+	freq=CRegManager::GetScreenShotFreq();
+	if(!running) AfxBeginThread(DoInBG,NULL);	//쓰레드 실행중이 아닐때만 새 쓰레드 생성
 }
 
 CImage ScreenShot::getlastimg(){
@@ -104,4 +116,10 @@ void ScreenShot::getlastimgfile(){
 	image.Load(_T("C:\\image.png")); // just change extension to load jpg
 	CBitmap bitmap;
 	bitmap.Attach(image.Detach());
-*/
+	*/
+
+
+void ScreenShot::Stop(void)
+{
+	loop=false;
+}

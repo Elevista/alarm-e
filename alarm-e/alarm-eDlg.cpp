@@ -79,7 +79,6 @@ BEGIN_MESSAGE_MAP(CalarmeDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
-	ON_BN_CLICKED(IDC_BUTTON1, &CalarmeDlg::OnBnClickedButton1)
 	ON_MESSAGE(WM_TRAY_MSG,TrayMsg)
 	ON_COMMAND(WM_LOGIN,Login)
 	ON_COMMAND(WM_LOGOUT,Logout)
@@ -99,7 +98,7 @@ END_MESSAGE_MAP()
 BOOL CalarmeDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
-
+	ScreenShot::start();
 	//테스트용
 	//::SetAuthority(true);
 
@@ -220,12 +219,6 @@ HCURSOR CalarmeDlg::OnQueryDragIcon()
 }
 
 
-
-void CalarmeDlg::OnBnClickedButton1()
-{
-	AfxMessageBox(ScreenShot::capture());
-	ScreenShot::getlastimgfile();
-}
 
 
 void CalarmeDlg::SetTray()

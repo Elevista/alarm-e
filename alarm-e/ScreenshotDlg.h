@@ -26,4 +26,6 @@ public:
 	CBitmapButton m_btnApply;
 	CBitmapButton m_btnZoom;
 	CBitmapButton m_btnDelete;
+	CButton m_chkScreenShot;
+	afx_msg void OnBnClickedApply();
 };

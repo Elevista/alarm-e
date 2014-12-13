@@ -129,6 +129,7 @@
     <ClInclude Include="LoginDlg.h" />
     <ClInclude Include="MultipartUpload.h" />
     <ClInclude Include="RegistDlg.h" />
+    <ClInclude Include="RegManager.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SavingStruct.h" />
     <ClInclude Include="ScreenShot.h" />
@@ -145,6 +146,7 @@
     <ClCompile Include="LoginDlg.cpp" />
     <ClCompile Include="MultipartUpload.cpp" />
     <ClCompile Include="RegistDlg.cpp" />
+    <ClCompile Include="RegManager.cpp" />
     <ClCompile Include="ScreenShot.cpp" />
     <ClCompile Include="ScreenshotDlg.cpp" />
     <ClCompile Include="stdafx.cpp">

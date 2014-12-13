@@ -6,6 +6,7 @@
 #include "RegistDlg.h"
 #include "afxdialogex.h"
 #include "MultipartUpload.h"
+#include "RegManager.h"
 
 // CRegistDlg 대화 상자입니다.
 
@@ -83,9 +84,9 @@ void CRegistDlg::OnBnClickedOk()
 		loginDB.m_PW=m_PW;	//패스워드 넣고
 		loginDB.Update();	//커밋
 		//레지스트리에 등록
-		theApp.WriteProfileString(_T("registrant"), _T("ID"), m_ID);
-		ID=m_ID;
-		::SetAuthority(true);//로그인 상태
+		CRegManager::SetID(m_ID);
+		ID=m_ID;	//전역변수에도 등록.
+		::SetAuthority(true);//로그인 상태. 메모리맵 등록.
 	}else{
 		loginDB.Close();
 		return;
