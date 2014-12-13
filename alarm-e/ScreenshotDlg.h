@@ -1,4 +1,6 @@
 #pragma once
+#include "fullscreendlg.h"
+#include "dbconsumer.h"
 
 
 // CScreenshotDlg 대화 상자입니다.
@@ -28,4 +30,13 @@ public:
 	CBitmapButton m_btnDelete;
 	CButton m_chkScreenShot;
 	afx_msg void OnBnClickedApply();
+	CListCtrl m_listScreenShot;
+	void Refresh(void);
+	afx_msg void OnLvnItemchangedListScreenshot(NMHDR *pNMHDR, LRESULT *pResult);
+	CStatic m_pcPreview;
+	afx_msg void OnBnClickedZoom();
+	CFullScreenDlg zoomDlg;
+	int index;
+	afx_msg void OnBnClickedDelete();
+	CcaptureImageDB imgDB;
 };

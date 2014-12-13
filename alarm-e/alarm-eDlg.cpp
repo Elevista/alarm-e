@@ -101,7 +101,7 @@ BOOL CalarmeDlg::OnInitDialog()
 	ScreenShot::start();
 	//테스트용
 	//::SetAuthority(true);
-
+	SetWindowText("Alarm-e");
 	//자식 다이얼로그 위치 크기 일괄 지정부분
 	int childX,childY,childW,childH;
 	childX=30;	//x좌표
@@ -269,7 +269,7 @@ void CalarmeDlg::OnDestroy()
 	nid.cbSize = sizeof(nid);
 	nid.hWnd = m_hWnd; // 메인 윈도우 핸들
 	nid.uID = IDR_MAINFRAME;
-
+	if(screenshotDlg.imgDB.IsOpen())screenshotDlg.imgDB.Close();
 	// 작업 표시줄(TaskBar)의 상태 영역에 아이콘을 삭제한다.
 	Shell_NotifyIcon(NIM_DELETE, &nid);
 	CloseHandle(hMapFile);
@@ -399,5 +399,6 @@ void CalarmeDlg::OnBnClickedSiteBlock()
 
 void CalarmeDlg::OnBnClickedScreenShot()
 {
+	screenshotDlg.Refresh();
 	SwitchChildDlg(SCREEN_SHOT);
 }

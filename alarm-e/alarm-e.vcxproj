@@ -125,6 +125,7 @@
     <ClInclude Include="alarm-eDlg.h" />
     <ClInclude Include="Alarm_UIPopup.h" />
     <ClInclude Include="DBconsumer.h" />
+    <ClInclude Include="FullScreenDlg.h" />
     <ClInclude Include="JSHook.h" />
     <ClInclude Include="LoginDlg.h" />
     <ClInclude Include="MultipartUpload.h" />
@@ -142,6 +143,7 @@
     <ClCompile Include="alarm-e.cpp" />
     <ClCompile Include="alarm-eDlg.cpp" />
     <ClCompile Include="DBconsumer.cpp" />
+    <ClCompile Include="FullScreenDlg.cpp" />
     <ClCompile Include="JSHook.cpp" />
     <ClCompile Include="LoginDlg.cpp" />
     <ClCompile Include="MultipartUpload.cpp" />

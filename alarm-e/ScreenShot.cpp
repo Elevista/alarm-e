@@ -52,7 +52,6 @@ UINT ScreenShot::DoInBG(LPVOID pParam){
 	
 		GlobalUnlock(imgDB.m_image.m_hData);
 		capImage.ReleaseDC();
-		getlastimgfile();
 		for(int i=0;i<freq;i++){	//대기중 매초마다 쓰레드 종료할지 검사
 			if(!loop) {running=false;return 4;}
 			Sleep(1000);
