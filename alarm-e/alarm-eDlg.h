@@ -6,6 +6,7 @@
 #include "afxwin.h"
 #include "afxext.h"
 #include "WordFilterDlg.h"
+#include "ScreenshotDlg.h"
 
 // CalarmeDlg 대화 상자
 class CalarmeDlg : public CDialogEx
@@ -48,4 +49,11 @@ public:
 	afx_msg void OnBnClickedWordFilter();
 	void SwitchChildDlg(int num);
 	CWordFilterDlg wordFilterDlg;
+	afx_msg void OnBnClickedSiteBlock();
+	CScreenshotDlg screenshotDlg;
+	afx_msg void OnBnClickedButton3();
+	afx_msg void OnBnClickedScreenShot();
+	CBitmapButton m_btnScreenShot;
+	CBitmapButton m_btnSiteBlock;
+	CBitmapButton m_btnWordFilter;
 };

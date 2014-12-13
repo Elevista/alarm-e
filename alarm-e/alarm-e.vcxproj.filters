@@ -46,6 +46,33 @@
     <None Include="res\bmp00002.bmp">
       <Filter>리소스 파일</Filter>
     </None>
+    <None Include="res\word_filter_sl.bmp">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="res\word_filter_usl.bmp">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="res\screen_shot_usl.bmp">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="res\screen_shot_sl.bmp">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="res\site_block_sl.bmp">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="res\site_block_usl.bmp">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="res\apply.bmp">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="res\delete.bmp">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="res\zoom.bmp">
+      <Filter>리소스 파일</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="alarm-e.h">
@@ -90,6 +117,9 @@
     <ClInclude Include="WordFilterDlg.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="ScreenshotDlg.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="alarm-e.cpp">
@@ -120,6 +150,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="WordFilterDlg.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ScreenshotDlg.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

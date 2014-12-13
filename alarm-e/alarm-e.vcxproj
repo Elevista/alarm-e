@@ -102,14 +102,23 @@
     <None Include="ReadMe.txt" />
     <None Include="res\alarm-e.ico" />
     <None Include="res\alarme.rc2" />
+    <None Include="res\apply.bmp" />
     <None Include="res\bg.bmp" />
     <None Include="res\bitmap1.bmp" />
     <None Include="res\bitmap2.bmp" />
     <None Include="res\bmp00001.bmp" />
     <None Include="res\bmp00002.bmp" />
+    <None Include="res\delete.bmp" />
+    <None Include="res\screen_shot_sl.bmp" />
+    <None Include="res\screen_shot_usl.bmp" />
+    <None Include="res\site_block_sl.bmp" />
+    <None Include="res\site_block_usl.bmp" />
+    <None Include="res\word_filter_sl.bmp" />
+    <None Include="res\word_filter_usl.bmp" />
     <None Include="res\x_btn.bmp" />
     <None Include="res\x_click.bmp" />
     <None Include="res\x_on.bmp" />
+    <None Include="res\zoom.bmp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="alarm-e.h" />
@@ -123,6 +132,7 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SavingStruct.h" />
     <ClInclude Include="ScreenShot.h" />
+    <ClInclude Include="ScreenshotDlg.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="WordFilterDlg.h" />
@@ -136,6 +146,7 @@
     <ClCompile Include="MultipartUpload.cpp" />
     <ClCompile Include="RegistDlg.cpp" />
     <ClCompile Include="ScreenShot.cpp" />
+    <ClCompile Include="ScreenshotDlg.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -151,6 +162,11 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SimpleFireWall\SimpleFireWall.vcxproj">
+      <Project>{79d58b5b-c0dc-4924-b3b4-69dbc9d00f8a}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

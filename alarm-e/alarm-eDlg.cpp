@@ -17,6 +17,9 @@
 #define WM_LOGIN WM_USER+3
 #define WM_LOGOUT WM_USER+4
 #define WM_CLOSEDLG WM_USER+5
+#define WORD_FILTER 1
+#define SCREEN_SHOT 2
+#define SITE_BLOCK 3
 
 // 응용 프로그램 정보에 사용되는 CAboutDlg 대화 상자입니다.
 
@@ -67,6 +70,9 @@ void CalarmeDlg::DoDataExchange(CDataExchange* pDX)
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_CLOSE, m_btnX);
 	DDX_Control(pDX, IDC_CLOSE, m_btnX);
+	DDX_Control(pDX, IDC_SCREEN_SHOT, m_btnScreenShot);
+	DDX_Control(pDX, IDC_SITE_BLOCK, m_btnSiteBlock);
+	DDX_Control(pDX, IDC_WORD_FILTER, m_btnWordFilter);
 }
 
 BEGIN_MESSAGE_MAP(CalarmeDlg, CDialogEx)
@@ -83,6 +89,8 @@ BEGIN_MESSAGE_MAP(CalarmeDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_CLOSE, &CalarmeDlg::OnBnClickedClose)
 	ON_WM_LBUTTONDOWN()
 	ON_BN_CLICKED(IDC_WORD_FILTER, &CalarmeDlg::OnBnClickedWordFilter)
+	ON_BN_CLICKED(IDC_SITE_BLOCK, &CalarmeDlg::OnBnClickedSiteBlock)
+	ON_BN_CLICKED(IDC_SCREEN_SHOT, &CalarmeDlg::OnBnClickedScreenShot)
 END_MESSAGE_MAP()
 
 
@@ -98,17 +106,25 @@ BOOL CalarmeDlg::OnInitDialog()
 	//자식 다이얼로그 위치 크기 일괄 지정부분
 	int childX,childY,childW,childH;
 	childX=30;	//x좌표
-	childY=120;	//y좌표
-	childW=625;	//넓이
-	childH=366;	//높이
+	childY=100;	//y좌표
+	childW=630;	//넓이
+	childH=400;	//높이
 	//자식 다이얼로그 추가부분. 표시는 SwitchChildDlg함수로
 	wordFilterDlg.Create(CWordFilterDlg::IDD,this);
 	wordFilterDlg.MoveWindow(childX,childY,childW,childH);
-	
+	screenshotDlg.Create(CScreenshotDlg::IDD,this);
+	screenshotDlg.MoveWindow(childX,childY,childW,childH);
 
-	//x버튼 이미지 설정
+	//버튼 이미지 적용부분
 	m_btnX.LoadBitmaps(IDB_X_BTN,IDB_X_CLICK,IDB_X_BTN,IDB_X_BTN);
 	m_btnX.SizeToContent();
+	m_btnScreenShot.LoadBitmaps(IDB_SCREEN_SHOT_ON);
+	m_btnScreenShot.SizeToContent();
+	m_btnWordFilter.LoadBitmaps(IDB_WORD_FILTER_ON);
+	m_btnWordFilter.SizeToContent();
+	m_btnSiteBlock.LoadBitmaps(IDB_SITE_BLOCK_ON);
+	m_btnSiteBlock.SizeToContent();
+
 
 	SetBackgroundImage(IDB_BG,BACKGR_TOPLEFT);
 	// 시스템 메뉴에 "정보..." 메뉴 항목을 추가합니다.
@@ -342,7 +358,7 @@ void CalarmeDlg::OnLButtonDown(UINT nFlags, CPoint point)
 void CalarmeDlg::OnBnClickedWordFilter()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	SwitchChildDlg(1);
+	SwitchChildDlg(WORD_FILTER);
 }
 
 
@@ -350,9 +366,45 @@ void CalarmeDlg::SwitchChildDlg(int num)
 {
 	//모든 자식 다이얼로그를 숨긴후에
 	wordFilterDlg.ShowWindow(SW_HIDE);
+	screenshotDlg.ShowWindow(SW_HIDE);
+	
+	m_btnScreenShot.LoadBitmaps(IDB_SCREEN_SHOT_OFF);
+	m_btnWordFilter.LoadBitmaps(IDB_WORD_FILTER_OFF);
+	m_btnSiteBlock.LoadBitmaps(IDB_SITE_BLOCK_OFF);
+	m_btnScreenShot.SetFocus();
+	m_btnWordFilter.SetFocus();
+	m_btnSiteBlock.SetFocus();
+	
+	
 
 	//선택한 다이얼로그만 표시.
 	switch(num){
-		case 1:wordFilterDlg.ShowWindow(SW_SHOW);break;
+		case WORD_FILTER:{
+			wordFilterDlg.ShowWindow(SW_SHOW);
+			m_btnWordFilter.LoadBitmaps(IDB_WORD_FILTER_ON);
+			m_btnWordFilter.SetFocus();
+			break;}
+		case SCREEN_SHOT:{
+			screenshotDlg.ShowWindow(SW_SHOW);
+			m_btnScreenShot.LoadBitmaps(IDB_SCREEN_SHOT_ON);
+			m_btnScreenShot.SetFocus();
+			break;}
+		case SITE_BLOCK:{
+			m_btnSiteBlock.LoadBitmaps(IDB_SITE_BLOCK_ON);
+			m_btnSiteBlock.SetFocus();
+			break;}
 	}
+}
+
+
+void CalarmeDlg::OnBnClickedSiteBlock()
+{
+	SwitchChildDlg(SITE_BLOCK);
+	ShellExecute(NULL, "open", "SimpleFireWall.exe", NULL, NULL, SW_SHOW); 
+}
+
+
+void CalarmeDlg::OnBnClickedScreenShot()
+{
+	SwitchChildDlg(SCREEN_SHOT);
 }
