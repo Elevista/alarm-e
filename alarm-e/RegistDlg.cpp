@@ -75,8 +75,8 @@ void CRegistDlg::OnBnClickedOk()
 	*/
 	CString response;
 	response.Format(_T("서버가 말하길: %s"),MultipartUpload::join(m_ID,m_PW));
-	AfxMessageBox(response);
 	if(response.Compare(_T("서버가 말하길: ok"))==0){
+		AfxMessageBox(_T("회원가입 성공"));
 		//디비에 등록
 		loginDB.Open();
 		loginDB.AddNew();	//새 레코드 추가
@@ -88,10 +88,11 @@ void CRegistDlg::OnBnClickedOk()
 		ID=m_ID;	//전역변수에도 등록.
 		::SetAuthority(true);//로그인 상태. 메모리맵 등록.
 	}else{
-		loginDB.Close();
+		AfxMessageBox(response);
+		if(loginDB.IsOpen())loginDB.Close();
 		return;
 	}
-	loginDB.Close();
+	if(loginDB.IsOpen())loginDB.Close();
 	CDialogEx::OnOK();
 }
 
