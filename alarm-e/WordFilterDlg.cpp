@@ -27,7 +27,6 @@ CWordFilterDlg::~CWordFilterDlg()
 void CWordFilterDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
-	DDX_Control(pDX, IDC_WORD_APPLY, m_btnApply);
 	DDX_Control(pDX, IDC_INSERT_WORD, m_btnInsert);
 	DDX_Control(pDX, IDC_DELETE_WORD, m_btnDelete);
 	DDX_Control(pDX, IDC_LIST_WORD, m_listWord);
@@ -39,7 +38,6 @@ void CWordFilterDlg::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CWordFilterDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_INSERT_WORD, &CWordFilterDlg::OnBnClickedInsertWord)
 	ON_BN_CLICKED(IDC_DELETE_WORD, &CWordFilterDlg::OnBnClickedDeleteWord)
-	ON_BN_CLICKED(IDC_WORD_APPLY, &CWordFilterDlg::OnBnClickedWordApply)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_LIST_WORD, &CWordFilterDlg::OnLvnItemchangedListWord)
 END_MESSAGE_MAP()
 
@@ -71,11 +69,7 @@ void CWordFilterDlg::OnBnClickedDeleteWord()
 }
 
 
-void CWordFilterDlg::OnBnClickedWordApply()
-{
 
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-}
 
 
 void CWordFilterDlg::Refresh(void)
@@ -105,6 +99,10 @@ BOOL CWordFilterDlg::OnInitDialog()
 	CDialogEx::OnInitDialog();
 	m_listWord.InsertColumn(0, _T("단어"), LVCFMT_LEFT, 250, -1);
 	// TODO:  여기에 추가 초기화 작업을 추가합니다.
+	m_btnDelete.LoadBitmaps(IDB_DELETE);
+	m_btnDelete.SizeToContent();
+	m_btnInsert.LoadBitmaps(IDB_INSERT);
+	m_btnInsert.SizeToContent();
 	Refresh();
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.

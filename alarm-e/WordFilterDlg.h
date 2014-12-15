@@ -32,7 +32,6 @@ public:
 
 	afx_msg void OnBnClickedInsertWord();
 	afx_msg void OnBnClickedDeleteWord();
-	afx_msg void OnBnClickedWordApply();
 	void Refresh(void);
 	CwordFilter wordDB;
 	int index;
