@@ -111,9 +111,6 @@
     <ClInclude Include="MultipartUpload.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Alarm_UIPopup.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="LoginDlg.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>

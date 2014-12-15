@@ -142,11 +142,36 @@ UINT CWordFilterDlg::MyThreadFunc(LPVOID pThreadParam)
 }
 void CWordFilterDlg::MyWorkFunc()
 {
+	//test
+	ClearTypedWord();
 	CString temp =  GetTypedWord();
 	for(unsigned i=0;i<m_vecWords.size();i++){
 		if(temp.Find(m_vecWords[i])>=0){	//(CString)wordDB.m_word가 해당 단어 값
 			::ClearTypedWord();
-			AfxMessageBox(m_vecWords[i]+"hit");
+
+
+
+			SetWindowPos(&wndTopMost, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+			SetWindowPos(&wndNoTopMost, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+
+			HWND hWndActive = NULL;
+			hWndActive = ::GetForegroundWindow();
+			if (this->m_hWnd != hWndActive && hWndActive != NULL)
+			{
+				DWORD dwThreadPID;
+				DWORD dwCurrentThreadID;
+				dwThreadPID = GetWindowThreadProcessId(hWndActive, NULL);
+				dwCurrentThreadID = GetCurrentThreadId();
+				if (dwCurrentThreadID != dwThreadPID)
+				{
+					if (AttachThreadInput(dwCurrentThreadID, dwThreadPID, TRUE))
+					{
+						BringWindowToTop();
+						AttachThreadInput(dwCurrentThreadID, dwThreadPID, FALSE);
+					}
+				}
+			}
+			// 	AfxMessageBox(m_vecWords[i] + "hit", MB_OK | MB_ICONHAND);
 		}
 	}
 }

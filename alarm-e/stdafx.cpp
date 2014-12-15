@@ -20,12 +20,12 @@ CString GetTypedWord(){
 }
 
 void ClearTypedWord(){
-	if(hMapFile3==NULL){
-		hMapFile3=CreateFileMapping(INVALID_HANDLE_VALUE,NULL,PAGE_READWRITE,0,sizeof(char)*40,_T("Alarme_TypedWord"));
+	if (hMapFile3 == NULL){
+		hMapFile3 = CreateFileMapping(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, sizeof(char)* 40, _T("Alarme_TypedWord"));
 	}
-	char* mapFile=(char*)MapViewOfFile(hMapFile3,FILE_MAP_ALL_ACCESS,0,0,sizeof(char)*40);
-	char typedWord[40]="";
-	memcpy(mapFile,typedWord,sizeof(char)*40);	//메모리에 값쓰기
+	char* mapFile = (char*)MapViewOfFile(hMapFile3, FILE_MAP_ALL_ACCESS, 0, 0, sizeof(char)* 40);
+	char typedWord[40] = "";
+	memcpy(mapFile, typedWord, sizeof(char)* 40);	//메모리에 값쓰기
 	UnmapViewOfFile(mapFile);
 	return;
 }
