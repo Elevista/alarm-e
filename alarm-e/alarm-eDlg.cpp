@@ -37,6 +37,8 @@ public:
 // 구현입니다.
 protected:
 	DECLARE_MESSAGE_MAP()
+public:
+//	virtual BOOL PreTranslateMessage(MSG* pMsg);
 };
 
 CAboutDlg::CAboutDlg() : CDialogEx(CAboutDlg::IDD)
@@ -121,7 +123,7 @@ BOOL CalarmeDlg::OnInitDialog()
 	childX=30;	//x좌표
 	childY=100;	//y좌표
 	childW=630;	//넓이
-	childH=400;	//높이
+	childH=410;	//높이
 	//자식 다이얼로그 추가부분. 표시는 SwitchChildDlg함수로
 	wordFilterDlg.Create(CWordFilterDlg::IDD,this);
 	wordFilterDlg.MoveWindow(childX,childY,childW,childH);

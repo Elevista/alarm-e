@@ -40,6 +40,7 @@ void CScreenshotDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CHK_SCREENSHOT, m_chkScreenShot);
 	DDX_Control(pDX, IDC_LIST_SCREENSHOT, m_listScreenShot);
 	DDX_Control(pDX, IDC_PC_SS_PREVIEW, m_pcPreview);
+	DDX_Control(pDX, IDC_WEB_LINK, m_btnWebLink);
 }
 
 
@@ -49,6 +50,7 @@ BEGIN_MESSAGE_MAP(CScreenshotDlg, CDialogEx)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_LIST_SCREENSHOT, &CScreenshotDlg::OnLvnItemchangedListScreenshot)
 	ON_BN_CLICKED(IDC_ZOOM, &CScreenshotDlg::OnBnClickedZoom)
 	ON_BN_CLICKED(IDC_DELETE, &CScreenshotDlg::OnBnClickedDelete)
+	ON_BN_CLICKED(IDC_WEB_LINK, &CScreenshotDlg::OnBnClickedWebLink)
 END_MESSAGE_MAP()
 
 
@@ -63,6 +65,8 @@ BOOL CScreenshotDlg::OnInitDialog()
 	m_btnApply.SizeToContent();
 	m_btnZoom.LoadBitmaps(IDB_ZOOM);
 	m_btnZoom.SizeToContent();
+	m_btnWebLink.LoadBitmaps(IDB_WEB_LINK);
+	m_btnWebLink.SizeToContent();
 	m_btnDelete.LoadBitmaps(IDB_DELETE);
 	m_btnDelete.SizeToContent();
 	m_chkScreenShot.SetCheck(CRegManager::GetScreenShotVal());
@@ -166,3 +170,35 @@ void CScreenshotDlg::OnBnClickedDelete()
 	}
 }
 
+
+
+void CScreenshotDlg::OnBnClickedWebLink()
+{
+	ShellExecute(NULL, "open", "http://alarme-sunnyholic.rhcloud.com", NULL, NULL, SW_SHOW); 
+}
+
+
+BOOL CScreenshotDlg::PreTranslateMessage(MSG* pMsg)
+{
+	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
+	//키눌린 메시지가 들어올때 esc이거나 return  값이면
+	//걍 리턴 시켜준다.
+	if(pMsg->message == WM_KEYDOWN)
+	{
+		switch(pMsg->wParam)
+		{
+			case VK_ESCAPE:
+			case VK_RETURN:
+			case VK_CANCEL:
+			return TRUE;
+			default:
+			break;
+		}
+	}
+	if(pMsg->message == WM_SYSKEYDOWN)	//알뜨에쁘뽀
+	{
+		if(pMsg->wParam == VK_F4)
+		return TRUE;
+	}
+	return CDialogEx::PreTranslateMessage(pMsg);
+}

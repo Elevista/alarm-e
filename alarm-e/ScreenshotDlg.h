@@ -39,4 +39,7 @@ public:
 	int index;
 	afx_msg void OnBnClickedDelete();
 	CcaptureImageDB imgDB;
+	afx_msg void OnBnClickedWebLink();
+	CBitmapButton m_btnWebLink;
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 };

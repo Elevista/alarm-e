@@ -49,6 +49,13 @@ void CWordFilterDlg::OnBnClickedInsertWord()
 {
 	UpdateData(true);
 	if(m_strWord.IsEmpty())return;
+	
+	for(unsigned i=0;i<m_vecWords.size();i++){
+		if(strcmp(m_strWord,m_vecWords[i])==0){	//(CString)wordDB.m_word가 해당 단어 값
+			AfxMessageBox("이미 있습니다.");
+			return;
+		}
+	}
 	wordDB.AddNew();
 	wordDB.m_word=m_strWord;
 	wordDB.Update();
@@ -167,3 +174,29 @@ void CWordFilterDlg::StartThread()
 	}
 }
 
+
+
+ BOOL CWordFilterDlg::PreTranslateMessage(MSG* pMsg)
+ {
+	 // TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
+	 //키눌린 메시지가 들어올때 esc이거나 return  값이면
+	//걍 리턴 시켜준다.
+	if(pMsg->message == WM_KEYDOWN)
+	{
+		switch(pMsg->wParam)
+		{
+			case VK_ESCAPE:
+			case VK_CANCEL:
+			return TRUE;
+			case VK_RETURN:{OnBnClickedInsertWord();return TRUE;}
+			default:
+			break;
+		}
+	}
+	if(pMsg->message == WM_SYSKEYDOWN)	//알뜨에쁘뽀
+	{
+		if(pMsg->wParam == VK_F4)
+		return TRUE;
+	}
+	return CDialogEx::PreTranslateMessage(pMsg);
+ }

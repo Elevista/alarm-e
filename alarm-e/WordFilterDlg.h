@@ -42,7 +42,8 @@ public:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnLvnItemchangedListWord(NMHDR *pNMHDR, LRESULT *pResult);
 	CString m_strWord;
-
+	
 
 	vector<CString> m_vecWords;
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 };
