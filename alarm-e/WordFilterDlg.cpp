@@ -145,7 +145,7 @@ void CWordFilterDlg::MyWorkFunc()
 	CString temp =  GetTypedWord();
 	for(unsigned i=0;i<m_vecWords.size();i++){
 		if(temp.Find(m_vecWords[i])>=0){	//(CString)wordDB.m_word가 해당 단어 값
-			::ClearTypedWord();
+			::ClearTypedWord(m_vecWords[i]);
 			AfxMessageBox(m_vecWords[i] + "는(은) 비속어 입니다.\n 사용을 자제해 주세요\n", MB_OK | MB_SYSTEMMODAL);
 		}
 	}

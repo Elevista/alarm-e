@@ -110,4 +110,4 @@ extern CJSHook g_JSHook;
 static HANDLE hMapFile3;
 
 CString GetTypedWord();
-void ClearTypedWord();
+void ClearTypedWord(CString);

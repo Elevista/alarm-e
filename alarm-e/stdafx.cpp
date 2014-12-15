@@ -19,13 +19,21 @@ CString GetTypedWord(){
 	return str;
 }
 
-void ClearTypedWord(){
+void ClearTypedWord(CString word){
 	if (hMapFile3 == NULL){
 		hMapFile3 = CreateFileMapping(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, sizeof(char)* 40, _T("Alarme_TypedWord"));
 	}
 	char* mapFile = (char*)MapViewOfFile(hMapFile3, FILE_MAP_ALL_ACCESS, 0, 0, sizeof(char)* 40);
-	char typedWord[40] = "";
-	memcpy(mapFile, typedWord, sizeof(char)* 40);	//메모리에 값쓰기
+	AfxMessageBox(mapFile);
+	char typedWord[40];
+	memcpy(typedWord,mapFile,sizeof(char)*40);	//메모리에 값읽어오기
+	CString str;
+	str.Format(_T("%s"),typedWord);
+	AfxMessageBox(str);
+	str.Replace(word,"");
+	AfxMessageBox(str);
+	memcpy(mapFile, str, sizeof(char)* 40);	//메모리에 값쓰기
+	AfxMessageBox(mapFile);
 	UnmapViewOfFile(mapFile);
 	return;
 }
