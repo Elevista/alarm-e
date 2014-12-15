@@ -167,6 +167,9 @@
     <ClCompile Include="FullScreenDlg.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Alarm_UIPopup.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="alarm-e.rc">

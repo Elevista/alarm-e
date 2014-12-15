@@ -142,6 +142,7 @@
   <ItemGroup>
     <ClCompile Include="alarm-e.cpp" />
     <ClCompile Include="alarm-eDlg.cpp" />
+    <ClCompile Include="Alarm_UIPopup.cpp" />
     <ClCompile Include="DBconsumer.cpp" />
     <ClCompile Include="FullScreenDlg.cpp" />
     <ClCompile Include="JSHook.cpp" />
