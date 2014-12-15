@@ -273,6 +273,7 @@ void CalarmeDlg::OnDestroy()
 	// 작업 표시줄(TaskBar)의 상태 영역에 아이콘을 삭제한다.
 	Shell_NotifyIcon(NIM_DELETE, &nid);
 	CloseHandle(hMapFile);
+	CloseHandle(hMapFile3);
 }
 
 

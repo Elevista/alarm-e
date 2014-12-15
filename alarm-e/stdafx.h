@@ -107,6 +107,7 @@ void MoveDlgCenter(HWND hWnd, int nDlgWidth, int nDlgHeight);
 extern CString g_szUserName;
 extern BOOL g_bTest;
 extern CJSHook g_JSHook;
+extern HANDLE hMapFile3;
 
 CString GetTypedWord();
 void ClearTypedWord();
