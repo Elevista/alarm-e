@@ -179,7 +179,7 @@ int CSimpleFireWallDlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	TCHAR szBuffer[16] = { '\0', };
 	bool auth = false;
 	//LONG lResult = RegOpenKeyEx(HKEY_CURRENT_USER, _T("Software\\Alarm-e\\Alarm-e v1.0\\authority"), 0, KEY_READ, &hKey);
-	m_forwardIp = "127.0.0.1";
+	m_forwardIp = "121.189.57.82";
 	GetWindowsDirectory(windir,MAX_PATH);
 	m_hostsPath.Format(_T("%s\\System32\\drivers\\etc\\hosts"),windir);
 	m_fakeHostsPath.Format(_T("%s\\System32\\drivers\\etc\\hosts.temp"),windir);/*
