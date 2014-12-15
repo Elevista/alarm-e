@@ -38,7 +38,6 @@ CalarmeApp theApp;
 CManager loginDB;
 CwordFilter filterDB;	//전역
 HANDLE hMapFile;//전역
-HANDLE hMapFile2;//전역
 CString ID;	//전역
 
 // CalarmeApp 초기화
@@ -71,7 +70,7 @@ BOOL CalarmeApp::InitInstance()
 	// 해당 설정이 저장된 레지스트리 키를 변경하십시오.
 	// TODO: 이 문자열을 회사 또는 조직의 이름과 같은
 	// 적절한 내용으로 수정해야 합니다.
-	if(SetRunning()) return 0; //중복 실행중이면 
+	
 	
 	SetRegistryKey(_T("Alarm-e"));	//Software 폴더아래 폴더이름
 	free( ( void* )m_pszProfileName );
@@ -121,20 +120,6 @@ BOOL CalarmeApp::InitInstance()
 
 
 
-bool SetRunning()	//실행중 설정값이 true면 true리턴. 아니면 false리턴
-{
-	hMapFile2=CreateFileMapping(INVALID_HANDLE_VALUE,NULL,PAGE_READWRITE,0,sizeof(bool),_T("Alarme_running"));
-	bool running(false);
-	bool *mem=(bool*)MapViewOfFile(hMapFile2,FILE_MAP_ALL_ACCESS,0,0,sizeof(bool));
-	memcpy(&running,mem,sizeof(bool));
-	if(running) return true;		
-	else{
-		running=true;
-		memcpy(mem,&running,sizeof(bool));
-		return false;
-	}
-}
-
 void SetAuthority(bool Authority)//권한 설정. true=관리자,false=유저.
 {
 	if(hMapFile==NULL){
@@ -147,7 +132,6 @@ void SetAuthority(bool Authority)//권한 설정. true=관리자,false=유저.
 	UnmapViewOfFile(auth);//파일닫기
 	//핸들 닫기는 alarm-eDlg destroy할때. 핸들닫으면 메모리에서 사라짐
 }
-
 
 
 bool GetAuthority(void)

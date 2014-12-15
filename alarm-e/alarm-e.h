@@ -12,7 +12,6 @@
 #include "DBconsumer.h"
 
 
-bool SetRunning();	//중복실행 방지부분
 void SetAuthority(bool Authority);	//권한 설정부분
 bool GetAuthority(void);	//권한 불러오기
 
@@ -38,6 +37,5 @@ extern CalarmeApp theApp;
 //전역변수로 추가
 extern CString ID;
 extern HANDLE hMapFile;
-extern HANDLE hMapFile2;
 extern CwordFilter filterDB;
 extern CManager loginDB;
