@@ -7,16 +7,28 @@
 
 HANDLE hMapFile3;
 
-CString GetTypeWord(){
+CString GetTypedWord(){
 	if(hMapFile3==NULL){
-		hMapFile3=CreateFileMapping(INVALID_HANDLE_VALUE,NULL,PAGE_READWRITE,0,sizeof(char)*20,_T("Alarme_TypedWord"));
+		hMapFile3=CreateFileMapping(INVALID_HANDLE_VALUE,NULL,PAGE_READWRITE,0,sizeof(char)*40,_T("Alarme_TypedWord"));
 	}
 	char* mapFile=(char*)MapViewOfFile(hMapFile3,FILE_MAP_ALL_ACCESS,0,0,sizeof(char)*40);
-	char typedWord[20];
+	char typedWord[40];
 	memcpy(typedWord,mapFile,sizeof(char)*40);	//메모리에 값읽어오기
 
 	CString str;
 	str.Format("%s",typedWord);
 	UnmapViewOfFile(mapFile);
+	AfxMessageBox(str);
 	return str;
+}
+
+void ClearTypedWord(){
+	if(hMapFile3==NULL){
+		hMapFile3=CreateFileMapping(INVALID_HANDLE_VALUE,NULL,PAGE_READWRITE,0,sizeof(char)*40,_T("Alarme_TypedWord"));
+	}
+	char* mapFile=(char*)MapViewOfFile(hMapFile3,FILE_MAP_ALL_ACCESS,0,0,sizeof(char)*40);
+	char typedWord[40]="";
+	memcpy(mapFile,typedWord,sizeof(char)*40);	//메모리에 값쓰기
+	UnmapViewOfFile(mapFile);
+	return;
 }

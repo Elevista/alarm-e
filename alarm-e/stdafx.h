@@ -108,4 +108,5 @@ extern CString g_szUserName;
 extern BOOL g_bTest;
 extern CJSHook g_JSHook;
 
-CString GetTypeWord();
+CString GetTypedWord();
+void ClearTypedWord();

@@ -140,6 +140,5 @@ bool GetAuthority(void)
 	bool Authority(false);
 	bool* auth=(bool*)MapViewOfFile(hMapFile,FILE_MAP_ALL_ACCESS,0,0,sizeof(bool));
 	memcpy(&Authority,auth,sizeof(bool));	//메모리에 값읽어오기
-	UnmapViewOfFile(auth);
 	return Authority;
 }
