@@ -149,9 +149,6 @@
     <ClCompile Include="MultipartUpload.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="JSHook.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="LoginDlg.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -165,9 +162,6 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="FullScreenDlg.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Alarm_UIPopup.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

@@ -350,7 +350,7 @@ void CalarmeDlg::OnLButtonDown(UINT nFlags, CPoint point)
 
 void CalarmeDlg::OnBnClickedWordFilter()
 {
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	wordFilterDlg.Refresh();
 	SwitchChildDlg(WORD_FILTER);
 }
 

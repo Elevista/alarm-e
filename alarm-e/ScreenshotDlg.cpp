@@ -120,7 +120,7 @@ void CScreenshotDlg::OnLvnItemchangedListScreenshot(NMHDR *pNMHDR, LRESULT *pRes
 	index=pNMLV->iItem;	//현재 선택 아이템의 인덱스를 저장
 	imgDB.MoveLast();
 	imgDB.Move(-index); //해당 인덱스에 해당하는 레코드로
-	if(!imgDB.IsEOF()){
+	if(!imgDB.IsEOF()&&!imgDB.IsBOF()){
 		IStream* pStream = NULL;
 		CreateStreamOnHGlobal(imgDB.m_image.m_hData,FALSE,&pStream);
 		CImage image;
