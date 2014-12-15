@@ -28,7 +28,6 @@ _declspec(dllexport) void SetHookProc(HWND hWnd)
 {
 	hHook =  SetWindowsHookEx(WH_GETMESSAGE,GetMsgProc,hHookDll,0);
 	hCaller=hWnd;
-
 }
 
 void UnsetHookProc()

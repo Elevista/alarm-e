@@ -106,7 +106,7 @@ BOOL CalarmeDlg::OnInitDialog()
 	//IME 후킹 dll 시작부분
 	hSync=CreateEvent(NULL,TRUE, FALSE,NULL);
 	hDll=LoadLibrary(_T("HookDll.dll"));
-	typedef void (CALLBACK *lpSetHookProc)(HWND hWnd);
+	typedef void (__cdecl *lpSetHookProc)(HWND hWnd);
 	lpSetHookProc SetHookProc;
 	SetHookProc=(lpSetHookProc)GetProcAddress(hDll,"SetHookProc");
 	SetHookProc(m_hWnd);
