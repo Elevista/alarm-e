@@ -6,7 +6,7 @@
 #include "WordFilterDlg.h"
 #include "afxdialogex.h"
 #include "DBconsumer.h"
-
+#include <vector>
 
 // CWordFilterDlg 대화 상자입니다.
 
@@ -83,15 +83,18 @@ void CWordFilterDlg::Refresh(void)
 	if(wordDB.IsOpen()){wordDB.Close();wordDB.Open();}
 	else{wordDB.Open();}
 	index=-1;
-	m_listWord.DeleteAllItems();
+	m_listWord.DeleteAllItems();	//리스트 갱신위해 다 지우기
+	m_vecWords.clear();	//백터 갱신위해 다 지우기
 	CString word;
 
 	//!!!
 	if(wordDB.IsEOF())return; //비어있으면 아무것도 안함
 	wordDB.MoveLast();	//마지막부터
+	
 	while(!wordDB.IsBOF()){	//첫 결과까지
 		word.Format(_T("%s"),(CString)wordDB.m_word);	//(CString)wordDB.m_word가 해당 단어 값
-		m_listWord.InsertItem(0,word);	
+		m_vecWords.push_back((CString)wordDB.m_word);	//벡터에 추가
+		m_listWord.InsertItem(0,word);	//리스트에 추가
 		wordDB.MovePrev();	//결과 하나 전으로 이동
 	}
 }
@@ -102,6 +105,7 @@ BOOL CWordFilterDlg::OnInitDialog()
 	CDialogEx::OnInitDialog();
 	m_listWord.InsertColumn(0, _T("단어"), LVCFMT_LEFT, 250, -1);
 	// TODO:  여기에 추가 초기화 작업을 추가합니다.
+	Refresh();
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
 }
@@ -134,22 +138,12 @@ UINT CWordFilterDlg::MyThreadFunc(LPVOID pThreadParam)
 void CWordFilterDlg::MyWorkFunc()
 {
 	CString temp =  GetTypedWord();
-	if(wordDB.IsOpen()){wordDB.Close();wordDB.Open();}
-	else{wordDB.Open();}
-	
-
-	//!!!
-	if(wordDB.IsEOF())return; //비어있으면 아무것도 안함
-	wordDB.MoveFirst();	//마지막부터
-	while(!wordDB.IsEOF()){	//첫 결과까지
-		if(temp.Find((CString)wordDB.m_word)>=0){	//(CString)wordDB.m_word가 해당 단어 값
-			AfxMessageBox(((CString)wordDB.m_word)+"hit");
+	for(unsigned i=0;i<m_vecWords.size();i++){
+		if(temp.Find(m_vecWords[i])>=0){	//(CString)wordDB.m_word가 해당 단어 값
 			::ClearTypedWord();
+			AfxMessageBox(m_vecWords[i]+"hit");
 		}
-		wordDB.MoveNext();	//결과 하나 전으로 이동
 	}
-
-
 }
 void CWordFilterDlg::StartThread()
 {
@@ -164,8 +158,8 @@ void CWordFilterDlg::StartThread()
  void CWordFilterDlg::StopThread()
 {
 	m_bDo = FALSE; // 쓰레드 정지 시키기 위해 FALSE를 입력한다.
-	Sleep(100); // 이것은 매우 중요하다. 이걸 하지 않으면 쓰레드가 작동이 잘 안될 수가 있다. 쓰레드에 체크할 여유를 준다고 생각하면 된다.
 	// 정지용 플래그 값을 입력했으니 아래 함수로 쓰레드가 끝날 때까지 기다려 준다.
+	Sleep(1500);
 	if ( ::WaitForSingleObject(m_pThread->m_hThread, INFINITE )) // INFINITE는 무한정 기다려 준다는 의미다.
 	{
 		// 쓰레드가 끝나면 이 속으로 들어온다.

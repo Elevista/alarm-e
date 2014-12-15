@@ -45,4 +45,5 @@ public:
 	CString m_strWord;
 
 
+	vector<CString> m_vecWords;
 };

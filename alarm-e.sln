@@ -5,6 +5,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "alarm-e", "alarm-e\alarm-e.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimpleFireWall", "SimpleFireWall\SimpleFireWall.vcxproj", "{79D58B5B-C0DC-4924-B3B4-69DBC9D00F8A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HookDll", "HookDll\HookDll.vcxproj", "{13E7B847-E1C4-42D9-94A9-A24FC334F47B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -19,6 +21,10 @@ Global
 		{79D58B5B-C0DC-4924-B3B4-69DBC9D00F8A}.Debug|Win32.Build.0 = Debug|Win32
 		{79D58B5B-C0DC-4924-B3B4-69DBC9D00F8A}.Release|Win32.ActiveCfg = Release|Win32
 		{79D58B5B-C0DC-4924-B3B4-69DBC9D00F8A}.Release|Win32.Build.0 = Release|Win32
+		{13E7B847-E1C4-42D9-94A9-A24FC334F47B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{13E7B847-E1C4-42D9-94A9-A24FC334F47B}.Debug|Win32.Build.0 = Debug|Win32
+		{13E7B847-E1C4-42D9-94A9-A24FC334F47B}.Release|Win32.ActiveCfg = Release|Win32
+		{13E7B847-E1C4-42D9-94A9-A24FC334F47B}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

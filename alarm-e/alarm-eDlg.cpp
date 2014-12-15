@@ -92,14 +92,27 @@ BEGIN_MESSAGE_MAP(CalarmeDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_SCREEN_SHOT, &CalarmeDlg::OnBnClickedScreenShot)
 END_MESSAGE_MAP()
 
-
+static HANDLE hSync;
+static HINSTANCE hDll;
 // CalarmeDlg 메시지 처리기
 
 BOOL CalarmeDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
-	ScreenShot::start();
-	wordFilterDlg.StartThread();
+	ScreenShot::start();	//스크린샷 시작
+	wordFilterDlg.StartThread();	//비속어감시 시작
+
+
+	//IME 후킹 dll 시작부분
+	hSync=CreateEvent(NULL,TRUE, FALSE,NULL);
+	hDll=LoadLibrary(_T("HookDll.dll"));
+	typedef void (CALLBACK *lpSetHookProc)(HWND hWnd);
+	lpSetHookProc SetHookProc;
+	SetHookProc=(lpSetHookProc)GetProcAddress(hDll,"SetHookProc");
+	SetHookProc(m_hWnd);
+
+
+
 	//테스트용
 	//::SetAuthority(true);
 	SetWindowText("Alarm-e");

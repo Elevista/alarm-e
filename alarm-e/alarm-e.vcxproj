@@ -167,6 +167,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\HookDll\HookDll.vcxproj">
+      <Project>{13e7b847-e1c4-42d9-94a9-a24fc334f47b}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\SimpleFireWall\SimpleFireWall.vcxproj">
       <Project>{79d58b5b-c0dc-4924-b3b4-69dbc9d00f8a}</Project>
     </ProjectReference>
