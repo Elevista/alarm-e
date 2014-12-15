@@ -99,6 +99,7 @@ BOOL CalarmeDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 	ScreenShot::start();
+	wordFilterDlg.StartThread();
 	//테스트용
 	//::SetAuthority(true);
 	SetWindowText("Alarm-e");
