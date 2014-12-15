@@ -302,7 +302,7 @@ BOOL CalarmeDlg::PreTranslateMessage(MSG* pMsg)
 	{
 		switch(pMsg->wParam)
 		{
-			case VK_ESCAPE:
+			case VK_ESCAPE: ShowWindow(SW_HIDE);
 			case VK_RETURN:
 			case VK_CANCEL:
 			return TRUE;
