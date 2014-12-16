@@ -122,7 +122,12 @@
     <ResourceCompile Include="SimpleFireWall.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\bg.bmp" />
+    <None Include="res\delete.bmp" />
+    <None Include="res\insert.bmp" />
     <None Include="res\SimpleFireWall.rc2" />
+    <None Include="res\x_btn.bmp" />
+    <None Include="res\x_click.bmp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\SimpleFireWall.ico" />

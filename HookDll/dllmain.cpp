@@ -14,7 +14,7 @@ LRESULT CALLBACK GetMsgProc(int code,  WPARAM wParam,  LPARAM lParam);
 
 
 extern "C"_declspec(dllexport) void SetHookProc(HWND hWnd);
-extern "C"_declspec(dllexport) char* GetLetter();
+extern "C"_declspec(dllexport) void UnsetHookProc();
 
 BOOL APIENTRY DllMain( HANDLE hModule, 
                        DWORD  ul_reason_for_call, 
@@ -30,7 +30,7 @@ _declspec(dllexport) void SetHookProc(HWND hWnd)
 	hCaller=hWnd;
 }
 
-void UnsetHookProc()
+_declspec(dllexport) void UnsetHookProc()
 {
 	UnhookWindowsHookEx(hHook);
 }

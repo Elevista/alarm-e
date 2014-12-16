@@ -117,6 +117,8 @@
     <None Include="res\screen_shot_usl.bmp" />
     <None Include="res\site_block_sl.bmp" />
     <None Include="res\site_block_usl.bmp" />
+    <None Include="res\website.bmp" />
+    <None Include="res\wordbg.bmp" />
     <None Include="res\word_filter_sl.bmp" />
     <None Include="res\word_filter_usl.bmp" />
     <None Include="res\x_btn.bmp" />

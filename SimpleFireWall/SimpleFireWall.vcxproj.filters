@@ -54,6 +54,21 @@
     <None Include="res\SimpleFireWall.rc2">
       <Filter>리소스 파일</Filter>
     </None>
+    <None Include="res\delete.bmp">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="res\insert.bmp">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="res\x_click.bmp">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="res\x_btn.bmp">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="res\bg.bmp">
+      <Filter>리소스 파일</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\SimpleFireWall.ico">

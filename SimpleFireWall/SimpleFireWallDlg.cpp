@@ -70,6 +70,9 @@ void CSimpleFireWallDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_BLOCKLIST, m_blockListBox);
 	DDX_Text(pDX, IDC_EDIT_SITE, m_siteEdit);
 	DDX_Text(pDX, IDC_EDIT_DETAIL, m_detailEdit);
+	DDX_Control(pDX, IDC_BTN_ADD, m_btnAdd);
+	DDX_Control(pDX, IDC_BTN_DEL, m_btnDelete);
+	DDX_Control(pDX, IDC_BTN_X, m_btnX);
 }
 
 BEGIN_MESSAGE_MAP(CSimpleFireWallDlg, CDialogEx)
@@ -79,44 +82,12 @@ BEGIN_MESSAGE_MAP(CSimpleFireWallDlg, CDialogEx)
 	ON_WM_CREATE()
 	ON_BN_CLICKED(IDC_BTN_ADD, &CSimpleFireWallDlg::OnBnClickedBtnAdd)
 	ON_BN_CLICKED(IDC_BTN_DEL, &CSimpleFireWallDlg::OnBnClickedBtnDel)
+	ON_BN_CLICKED(IDC_BTN_X, &CSimpleFireWallDlg::OnBnClickedBtnX)
+	ON_WM_LBUTTONDOWN()
 END_MESSAGE_MAP()
 
 
-// CSimpleFireWallDlg 메시지 처리기
 
-//BOOL CSimpleFireWallDlg::OnInitDialog()
-//{
-//	CDialogEx::OnInitDialog();
-//
-//	// 시스템 메뉴에 "정보..." 메뉴 항목을 추가합니다.
-//
-//	// IDM_ABOUTBOX는 시스템 명령 범위에 있어야 합니다.
-//	ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
-//	ASSERT(IDM_ABOUTBOX < 0xF000);
-//
-//	CMenu* pSysMenu = GetSystemMenu(FALSE);
-//	if (pSysMenu != NULL)
-//	{
-//		BOOL bNameValid;
-//		CString strAboutMenu;
-//		bNameValid = strAboutMenu.LoadString(IDS_ABOUTBOX);
-//		ASSERT(bNameValid);
-//		if (!strAboutMenu.IsEmpty())
-//		{
-//			pSysMenu->AppendMenu(MF_SEPARATOR);
-//			pSysMenu->AppendMenu(MF_STRING, IDM_ABOUTBOX, strAboutMenu);
-//		}
-//	}
-//
-//	// 이 대화 상자의 아이콘을 설정합니다.  응용 프로그램의 주 창이 대화 상자가 아닐 경우에는
-//	//  프레임워크가 이 작업을 자동으로 수행합니다.
-//	SetIcon(m_hIcon, TRUE);			// 큰 아이콘을 설정합니다.
-//	SetIcon(m_hIcon, FALSE);		// 작은 아이콘을 설정합니다.
-//
-//	// TODO: 여기에 추가 초기화 작업을 추가합니다.
-//
-//	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
-//}
 
 void CSimpleFireWallDlg::OnSysCommand(UINT nID, LPARAM lParam)
 {
@@ -236,12 +207,20 @@ BOOL CSimpleFireWallDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
-	
+	SetWindowText("사이트 차단");
 	//m_blockListBox.AddString(_T("ttttt"));
 	
 //	m_detailEdit = "ttttt";
 	
 	// 리스트 초기화 
+	m_btnX.LoadBitmaps(IDB_X_BTN,IDB_X_CLICK,IDB_X_BTN,IDB_X_BTN);
+	m_btnX.SizeToContent();
+	m_btnAdd.LoadBitmaps(IDB_INSERT);
+	m_btnAdd.SizeToContent();
+	m_btnDelete.LoadBitmaps(IDB_DELETE);
+	m_btnDelete.SizeToContent();
+	SetBackgroundImage(IDB_BG,BACKGR_TOPLEFT);
+
 	m_blockListBox.DeleteAllItems();
 
 	// 리스트 스타일 설정
@@ -430,4 +409,24 @@ void CSimpleFireWallDlg::OnBnClickedBtnDel()
 		
 		
 	}
+}
+
+
+void CSimpleFireWallDlg::OnBnClickedBtnX()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+
+	CSimpleFireWallDlg::OnOK();
+}
+
+
+void CSimpleFireWallDlg::OnLButtonDown(UINT nFlags, CPoint point)
+{
+	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+	int height=40;//타이틀바 두께
+	int width=590;//창닫기 버튼을 제외한 타이틀바 넓이
+	if(point.x<=width&&point.y<=height)
+		SendMessage( WM_NCLBUTTONDOWN, HTCAPTION, 0 );	//타이틀바 클릭한걸로 속임
+
+	CDialogEx::OnLButtonDown(nFlags, point);
 }

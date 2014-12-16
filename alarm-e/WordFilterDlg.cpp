@@ -110,6 +110,7 @@ BOOL CWordFilterDlg::OnInitDialog()
 	m_btnDelete.SizeToContent();
 	m_btnInsert.LoadBitmaps(IDB_INSERT);
 	m_btnInsert.SizeToContent();
+	SetBackgroundImage(IDB_WORDFILTER_BG,BACKGR_TOPLEFT);
 	Refresh();
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
@@ -145,6 +146,7 @@ void CWordFilterDlg::MyWorkFunc()
 	CString temp =  GetTypedWord();
 	for(unsigned i=0;i<m_vecWords.size();i++){
 		if(temp.Find(m_vecWords[i])>=0){	//(CString)wordDB.m_word가 해당 단어 값
+			temp.Replace(m_vecWords[i],"");
 			::ClearTypedWord(m_vecWords[i]);
 			AfxMessageBox(m_vecWords[i] + "는(은) 비속어 입니다.\n 사용을 자제해 주세요\n", MB_OK | MB_SYSTEMMODAL);
 		}

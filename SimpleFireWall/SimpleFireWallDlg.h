@@ -48,4 +48,9 @@ public:
 	afx_msg void OnBnClickedBtnDel();
 	TCHAR windir[MAX_PATH];
 
+	CBitmapButton m_btnAdd;
+	CBitmapButton m_btnDelete;
+	CBitmapButton m_btnX;
+	afx_msg void OnBnClickedBtnX();
+	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 };
