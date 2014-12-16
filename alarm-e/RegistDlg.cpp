@@ -53,10 +53,7 @@ void CRegistDlg::OnBnClickedOk()
 	if(m_ID.IsEmpty()){
 		AfxMessageBox(_T("아이디를 입력해 주세요"));
 		return;
-	}else if(strcmp(m_ID,_T("test"))==0){
-		AfxMessageBox(_T("사용할 수 없는 아이디 입니다."));
-		return;
-	}if(m_PW.IsEmpty()){
+	}else if(m_PW.IsEmpty()){
 		AfxMessageBox(_T("패스워드를 입력해 주세요"));
 		return;
 	}else if(!onlyASCIIcheck(m_ID)){
