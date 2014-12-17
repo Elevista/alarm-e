@@ -1,6 +1,7 @@
 
 // SimpleFireWallDlg.cpp : 구현 파일
-//
+// 사이트 차단 다이얼로그. 실행 권한이 다르기 때문에 따로 프로젝트 생성
+// 호스트 파일 변경으로 차단.
 
 #include "stdafx.h"
 #include "SimpleFireWall.h"
@@ -55,8 +56,6 @@ END_MESSAGE_MAP()
 
 CSimpleFireWallDlg::CSimpleFireWallDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CSimpleFireWallDlg::IDD, pParent)
-	//, m_siteEdit(_T(""))
-	//, m_detailEdit(_T(""))
 	, m_siteEdit(_T(""))
 	, m_detailEdit(_T(""))
 {
@@ -66,7 +65,6 @@ CSimpleFireWallDlg::CSimpleFireWallDlg(CWnd* pParent /*=NULL*/)
 void CSimpleFireWallDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
-	//DDX_Control(pDX, IDC_BLOCKLIST, m_blockListBox);
 	DDX_Control(pDX, IDC_BLOCKLIST, m_blockListBox);
 	DDX_Text(pDX, IDC_EDIT_SITE, m_siteEdit);
 	DDX_Text(pDX, IDC_EDIT_DETAIL, m_detailEdit);
@@ -149,18 +147,10 @@ int CSimpleFireWallDlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	HKEY hKey;
 	TCHAR szBuffer[16] = { '\0', };
 	bool auth = false;
-	//LONG lResult = RegOpenKeyEx(HKEY_CURRENT_USER, _T("Software\\Alarm-e\\Alarm-e v1.0\\authority"), 0, KEY_READ, &hKey);
 	m_forwardIp = "121.189.57.82";
-	GetWindowsDirectory(windir,MAX_PATH);
-	m_hostsPath.Format(_T("%s\\System32\\drivers\\etc\\hosts"),windir);
-	m_fakeHostsPath.Format(_T("%s\\System32\\drivers\\etc\\hosts.temp"),windir);/*
-	if (ERROR_SUCCESS == lResult)
-	{
-		RegQueryValueEx(hKey, _T("power"), NULL, &dwType, (LPBYTE)szBuffer, &dwSize);
-		RegCloseKey(hKey);
-		auth = szBuffer[0];
-	}*/
-
+	GetWindowsDirectory(windir,MAX_PATH);	//윈도우즈 설치 디렉토리 가져오기
+	m_hostsPath.Format(_T("%s\\System32\\drivers\\etc\\hosts"),windir);	//호스트 파일 위치
+	m_fakeHostsPath.Format(_T("%s\\System32\\drivers\\etc\\hosts.temp"),windir);
 
 
 
@@ -175,7 +165,7 @@ int CSimpleFireWallDlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	//로그인 유무 확인 Reg - end
 
-	if (auth){
+	if (auth){	//권한 확인. 즉 alarm-e 메인 다이얼로그가 관리자 모드로 로그인 되어 있어야만 실행 가능
 		
 	}
 	else{
@@ -193,24 +183,11 @@ int CSimpleFireWallDlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 
 
-//void CSimpleFireWallDlg::PreInitDialog()
-//{
-//	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
-//	AfxMessageBox(_T("권한이 부족 합니다."));
-//
-//
-//	CDialogEx::PreInitDialog();
-//}
-
-
 BOOL CSimpleFireWallDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
 	SetWindowText("사이트 차단");
-	//m_blockListBox.AddString(_T("ttttt"));
-	
-//	m_detailEdit = "ttttt";
 	
 	// 리스트 초기화 
 	m_btnX.LoadBitmaps(IDB_X_BTN,IDB_X_CLICK,IDB_X_BTN,IDB_X_BTN);
@@ -248,8 +225,6 @@ BOOL CSimpleFireWallDlg::OnInitDialog()
 	if (bRet){
 		while (sFile.ReadString(line))
 		{
-			
-			
 			line.Remove(_T('\r'));
 			line.Remove(_T('\n'));
 			if (comb.Compare(line) == 0){
@@ -258,8 +233,6 @@ BOOL CSimpleFireWallDlg::OnInitDialog()
 			}
 
 		}
-
-		
 	}
 	if (!bInit){
 		sFile.SeekToEnd();
@@ -319,12 +292,6 @@ void CSimpleFireWallDlg::OnBnClickedBtnAdd()
 	m_detailEdit.Empty();
 	m_siteEdit.Empty();
 	UpdateData(FALSE);
-	
-	
-	
-	
-	
-	
 
 }
 
@@ -335,8 +302,6 @@ void CSimpleFireWallDlg::siteAdd()
 	CString dataTemp;
 	dataTemp = m_forwardIp + "\t" + m_siteEdit + "\t#" + m_detailEdit;
 	
-
-
 	CStdioFile     sFile;
 	dataTemp = dataTemp;
 	sFile.Open(m_hostsPath, CFile::modeReadWrite | CFile::typeText);

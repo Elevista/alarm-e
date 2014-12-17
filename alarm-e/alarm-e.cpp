@@ -104,7 +104,7 @@ BOOL CalarmeApp::InitInstance()
 	}
 	if(loginDB.IsOpen())loginDB.Close();
 	
-	CalarmeDlg dlg;
+	CalarmeDlg dlg; //메인 다이얼로그
 	m_pMainWnd = &dlg;
 	INT_PTR nResponse = dlg.DoModal();
 
@@ -120,7 +120,7 @@ BOOL CalarmeApp::InitInstance()
 }
 
 
-
+//~~~~~전역함수들~~~~~~
 bool SetRunning()	//실행중 설정값이 true면 true리턴. 아니면 false리턴
 {
 	hMapFile2=CreateFileMapping(INVALID_HANDLE_VALUE,NULL,PAGE_READWRITE,0,sizeof(bool),_T("Alarme_running"));
@@ -150,7 +150,7 @@ void SetAuthority(bool Authority)//권한 설정. true=관리자,false=유저.
 
 
 
-bool GetAuthority(void)
+bool GetAuthority(void)	//권한 가져오기
 {
 	if(hMapFile==NULL) return false;
 	bool Authority(false);

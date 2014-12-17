@@ -1,5 +1,5 @@
 // RegistDlg.cpp : 구현 파일입니다.
-//
+// 회원가입 다이얼로그
 
 #include "stdafx.h"
 #include "alarm-e.h"
@@ -73,11 +73,8 @@ void CRegistDlg::OnBnClickedOk()
 		return;
 	}
 	
-	/*
-		이부분에 서버로 보내는 내용 들어갈 예정.
-	*/
 	CString response;
-	response.Format(_T("서버가 말하길: %s"),MultipartUpload::join(m_ID,m_PW));
+	response.Format(_T("서버가 말하길: %s"),MultipartUpload::join(m_ID,m_PW));	//서버로 전송, 값받기
 	if(response.Compare(_T("서버가 말하길: ok"))==0){
 		AfxMessageBox(_T("회원가입 성공"));
 		//디비에 등록
@@ -100,7 +97,7 @@ void CRegistDlg::OnBnClickedOk()
 }
 
 
-bool CRegistDlg::onlyASCIIcheck(CString str)
+bool CRegistDlg::onlyASCIIcheck(CString str)	//2바이트 문자 제외
 {
 	long nLen = str.GetLength();
  	for( long i=0 ; i < nLen ; ++i)

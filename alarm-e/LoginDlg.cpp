@@ -1,5 +1,5 @@
 // LoginDlg.cpp : 구현 파일입니다.
-//
+// 로그인 다이얼로그
 
 #include "stdafx.h"
 #include "alarm-e.h"

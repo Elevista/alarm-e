@@ -1,5 +1,5 @@
 // ScreenshotDlg.cpp : 구현 파일입니다.
-//
+// 스크린샷 다이얼로그
 
 #include "stdafx.h"
 #include "alarm-e.h"
@@ -87,18 +87,18 @@ void CScreenshotDlg::OnStnClickedPcSsPreview()
 }
 
 
-void CScreenshotDlg::OnBnClickedApply()
+void CScreenshotDlg::OnBnClickedApply()	//적용 버튼 클릭시
 {
 	UpdateData(true);
-	CRegManager::SetScreenShotVal(m_chkScreenShot.GetCheck());
-	CRegManager::SetScreenShotFreq(_ttoi(m_editSsFrequency));
-	ScreenShot::start();
+	CRegManager::SetScreenShotVal(m_chkScreenShot.GetCheck());	//레지에 설정값 저장
+	CRegManager::SetScreenShotFreq(_ttoi(m_editSsFrequency));	//레지에 설정값 저장
+	ScreenShot::start();	//쓰레드 생성
 	AfxMessageBox(_T("적용 되었습니다."));
-	Sleep(1500);	//쓰레드 종료 검출 텀
+	Sleep(1500);	//기존 돌던 쓰레드 종료 검출 텀
 }
 
 
-void CScreenshotDlg::Refresh(void)
+void CScreenshotDlg::Refresh(void)	//리스트 갱신
 {
 	if(imgDB.IsOpen()){imgDB.Close();imgDB.Open();}
 	else{imgDB.Open();}
@@ -118,7 +118,7 @@ void CScreenshotDlg::Refresh(void)
 
 
 void CScreenshotDlg::OnLvnItemchangedListScreenshot(NMHDR *pNMHDR, LRESULT *pResult)
-{
+{	//리스트 아이템 선택시
 	LPNMLISTVIEW pNMLV = reinterpret_cast<LPNMLISTVIEW>(pNMHDR);
 	
 	index=pNMLV->iItem;	//현재 선택 아이템의 인덱스를 저장
@@ -126,19 +126,19 @@ void CScreenshotDlg::OnLvnItemchangedListScreenshot(NMHDR *pNMHDR, LRESULT *pRes
 	imgDB.Move(-index); //해당 인덱스에 해당하는 레코드로
 	if(!imgDB.IsEOF()&&!imgDB.IsBOF()){
 		IStream* pStream = NULL;
-		CreateStreamOnHGlobal(imgDB.m_image.m_hData,FALSE,&pStream);
+		CreateStreamOnHGlobal(imgDB.m_image.m_hData,FALSE,&pStream);//DB의 데이터를 메모리로 로드 하기 위한 스트림 생성
 		CImage image;
 		image.Load(pStream);	//이미지를 불러와서
 		Bitmap bitmap(image.Detach(),NULL);	//Bitmap을 생성
 		
-		int nWidth=340;	//고정 넓이
+		int nWidth=340;	//가로는 고정 크기
 		int nHeight=(int)(bitmap.GetHeight()*nWidth/bitmap.GetWidth()); //높이는 비율맞춰서
 		
 		
 		//새로운 비트맵을 생성하고
 		Gdiplus::Bitmap* newBitmap = new Gdiplus::Bitmap(nWidth, nHeight, bitmap.GetPixelFormat());
 		Gdiplus::Graphics graphics(newBitmap);	//거기에 그래픽을 만들고
-		graphics.DrawImage(&bitmap, 0, 0, nWidth, nHeight);	//그래픽에 원래 그림을 그림.
+		graphics.DrawImage(&bitmap, 0, 0, nWidth, nHeight);	//그래픽에 원래 그림을 새로운 크기로 그림.
 
 		
 		HBITMAP hBitmap;
@@ -172,13 +172,13 @@ void CScreenshotDlg::OnBnClickedDelete()
 
 
 
-void CScreenshotDlg::OnBnClickedWebLink()
+void CScreenshotDlg::OnBnClickedWebLink()	//버튼 클릭시 웹페이지 열기
 {
 	ShellExecute(NULL, "open", "http://alarme-sunnyholic.rhcloud.com", NULL, NULL, SW_SHOW); 
 }
 
 
-BOOL CScreenshotDlg::PreTranslateMessage(MSG* pMsg)
+BOOL CScreenshotDlg::PreTranslateMessage(MSG* pMsg)	//종료 막기 위한 부분
 {
 	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
 	//키눌린 메시지가 들어올때 esc이거나 return  값이면

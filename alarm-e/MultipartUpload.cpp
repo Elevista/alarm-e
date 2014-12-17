@@ -1,3 +1,5 @@
+//http 멀티파트 업로드 구현 클래스
+
 #include "stdafx.h"
 #include "MultipartUpload.h"
 #include "alarm-e.h"
@@ -11,7 +13,7 @@ void MultipartUpload::Upload(BYTE* pImgData,DWORD len){
 }
 
 
-CString MultipartUpload::join(CString id,CString pw){
+CString MultipartUpload::join(CString id,CString pw){	//회원가입 정보 업로드
 
 	CInternetSession internetSession;
 	CHttpConnection * httpConnection = internetSession.GetHttpConnection(_T("alarme-sunnyholic.rhcloud.com"), (INTERNET_PORT)80,NULL ,NULL);
@@ -66,11 +68,11 @@ CString MultipartUpload::join(CString id,CString pw){
 	delete httpFile;
 	delete httpConnection;
 
-	return sResponse;
+	return sResponse;	//받아온 서버의 회신을 리턴. 아이디중복, 성공 등의 메세지
 }
 
 
-CString MultipartUpload::ConvertUTF8toUnicode(char* ansiStr)
+CString MultipartUpload::ConvertUTF8toUnicode(char* ansiStr)	//쓰려다가 안씀
 {
 	int nSize = MultiByteToWideChar(CP_UTF8, 0, ansiStr ,  -1 , 0 , 0);
 
@@ -83,10 +85,10 @@ CString MultipartUpload::ConvertUTF8toUnicode(char* ansiStr)
 	return str;
 } 
 
-UINT MultipartUpload::UploadThread(LPVOID lpParam)
+UINT MultipartUpload::UploadThread(LPVOID lpParam)	//파일 업로드 쓰레드
 {
 	CTime time=CTime::GetCurrentTime();
-	LPVOID pImgData=lpParam;
+	LPVOID pImgData=lpParam;	//이미지 데이터 주소는 파라미터로 들어옴
 	CInternetSession internetSession;
 	CHttpConnection * httpConnection = internetSession.GetHttpConnection(_T("alarme-sunnyholic.rhcloud.com"), (INTERNET_PORT)80,NULL ,NULL);
 	CHttpFile * httpFile = httpConnection->OpenRequest(CHttpConnection::HTTP_VERB_POST, _T("/uploadServlet"));
@@ -101,7 +103,7 @@ UINT MultipartUpload::UploadThread(LPVOID lpParam)
 		time.GetSecond());
 
 
-	//헤더임. 멀티파트폼데이타. 임의 바운더리~ UA는 없어도댐
+	//헤더임. 멀티파트폼데이타. 임의 바운더리~ UA는 alarm-e가 아니면 서버에서 받질 않게 해놓음.
 	httpFile->AddRequestHeaders(_T("Accept: */*\r\nContent-Type: multipart/form-data; boundary=---------------------------7d13a23b368\r\nUser-Agent: alarm-e\r\n"));
 
 
@@ -122,10 +124,10 @@ UINT MultipartUpload::UploadThread(LPVOID lpParam)
 	
 	/* 보낼 post내용 바이트 코드로 옮겨 쓰는 부분 */
 	BYTE * szPostData, * pCurrentByte;
-	szPostData = pCurrentByte = new BYTE[dwPostDataLen];	//보낼 데이터
+	szPostData = pCurrentByte = new BYTE[dwPostDataLen];	//보낼 바이트 배열
 	
 	
-	char *pTemp;	//2바이트 유니코드에서 1바이트 문자로 변환용
+	char *pTemp;	//유니코드에서 1바이트 문자로 변환용이었지만 나중에 멀티바이트로 바꾸면서 사실상 의미없음
 
 	//헤더 부분
 	pTemp = new char[sPrefix.GetLength()];

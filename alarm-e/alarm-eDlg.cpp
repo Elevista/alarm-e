@@ -1,6 +1,6 @@
 
 // alarm-eDlg.cpp : 구현 파일
-//
+// 메인 다이얼로그
 
 #include "stdafx.h"
 #include "alarm-e.h"
@@ -105,13 +105,13 @@ BOOL CalarmeDlg::OnInitDialog()
 	wordFilterDlg.StartThread();	//비속어감시 시작
 
 
-	//IME 후킹 dll 시작부분
+	//IME 후킹 dll 다이나믹 로딩 & 시작부분
 	hSync=CreateEvent(NULL,TRUE, FALSE,NULL);
 	hDll=LoadLibrary(_T("HookDll.dll"));
 	typedef void (__cdecl *lpSetHookProc)(HWND hWnd);
 	lpSetHookProc SetHookProc;
 	SetHookProc=(lpSetHookProc)GetProcAddress(hDll,"SetHookProc");
-	SetHookProc(m_hWnd);
+	SetHookProc(m_hWnd);	//후킹 시작
 
 
 
@@ -175,9 +175,10 @@ BOOL CalarmeDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 작은 아이콘을 설정합니다.
 
 	ShowWindow(SW_SHOW);
+	//최소화 실행을 위해. 메세지큐로 보내지 않으면 최소화가 되지 않음
 	PostMessage (WM_SHOWWINDOW,FALSE, SW_OTHERUNZOOM);
 	// TODO: 여기에 추가 초기화 작업을 추가합니다.
-	SetTray();
+	SetTray();	//트레이 아이콘 설정
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 }
 
@@ -237,22 +238,22 @@ HCURSOR CalarmeDlg::OnQueryDragIcon()
 
 
 
-void CalarmeDlg::SetTray()
+void CalarmeDlg::SetTray()	//트레이아이콘 생성
 {
 	 NOTIFYICONDATA  nid;
 	 nid.cbSize = sizeof(nid);
 	 nid.hWnd = m_hWnd; // 메인 윈도우 핸들
 	 nid.uID = IDR_MAINFRAME;  // 아이콘 리소스 ID
 	 nid.uFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP; // 플래그 설정
-	 nid.uCallbackMessage = WM_TRAY_MSG; // 콜백메시지 설정
+	 nid.uCallbackMessage = WM_TRAY_MSG; // 콜백메시지 설정. 사용자 메세지임
 	 nid.hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME); // 아이콘 로드
-	 lstrcpy(nid.szTip, _T("alarm-e 작동중")); 
+	 lstrcpy(nid.szTip, _T("alarm-e 작동중"));	//툴팁
 	 Shell_NotifyIcon(NIM_ADD, &nid);
 	 SendMessage(WM_SETICON, (WPARAM)TRUE, (LPARAM)nid.hIcon);
 }
 
 
-LRESULT CalarmeDlg::TrayMsg(WPARAM wParam, LPARAM lParam)
+LRESULT CalarmeDlg::TrayMsg(WPARAM wParam, LPARAM lParam)	//콜백 사용자 메세지 핸들러
 {
 	HWND hWnd=GetSafeHwnd();
 	POINT pos;
@@ -267,7 +268,7 @@ LRESULT CalarmeDlg::TrayMsg(WPARAM wParam, LPARAM lParam)
 			AppendMenu(hMenu, MF_STRING, WM_LOGOUT, _T("관리자 로그아웃"));
 			AppendMenu(hMenu, MF_STRING, WM_CLOSE, _T("프로그램 종료"));
 		}
-		else
+		else	//로그인 안된 상태면
 			AppendMenu(hMenu, MF_STRING, WM_LOGIN, _T("관리자 로그인"));
 		
 		SetForegroundWindow();	//생성된 팝업메뉴 밖을 클릭할 때 팝업 닫기
@@ -277,7 +278,7 @@ LRESULT CalarmeDlg::TrayMsg(WPARAM wParam, LPARAM lParam)
 }
 
 
-void CalarmeDlg::OnDestroy()
+void CalarmeDlg::OnDestroy()	//앱 종료시
 {
 	CDialogEx::OnDestroy();
 
@@ -288,9 +289,10 @@ void CalarmeDlg::OnDestroy()
 	if(screenshotDlg.imgDB.IsOpen())screenshotDlg.imgDB.Close();
 	// 작업 표시줄(TaskBar)의 상태 영역에 아이콘을 삭제한다.
 	Shell_NotifyIcon(NIM_DELETE, &nid);
-	CloseHandle(hMapFile);
+	CloseHandle(hMapFile);	//메모리맵파일 닫기
+	CloseHandle(hMapFile2);
 	CloseHandle(hMapFile3);
-	typedef void (__cdecl *lpUnsetHookProc)();
+	typedef void (__cdecl *lpUnsetHookProc)();	//후크 풀기
 	lpUnsetHookProc UnsetHookProc;
 	UnsetHookProc=(lpUnsetHookProc)GetProcAddress(hDll,"UnsetHookProc");
 	UnsetHookProc();
@@ -298,7 +300,7 @@ void CalarmeDlg::OnDestroy()
 
 
 
-BOOL CalarmeDlg::PreTranslateMessage(MSG* pMsg)
+BOOL CalarmeDlg::PreTranslateMessage(MSG* pMsg)	//입력으로 프로그램 종료 방지
 {
 	//키눌린 메시지가 들어올때 esc이거나 return  값이면
 	//걍 리턴 시켜준다.
@@ -357,6 +359,9 @@ void CalarmeDlg::OnBnClickedClose()
 }
 
 
+
+//타이틀바가 없어서 창 위치 이동이 원래 불가능한데,
+//가상의 타이틀바 범위를 지정해 LButtonDown메세지를 타이틀바를 누른 메세지로 바꿈으로서 창위치 이동 구현.
 void CalarmeDlg::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
@@ -376,12 +381,14 @@ void CalarmeDlg::OnBnClickedWordFilter()
 }
 
 
-void CalarmeDlg::SwitchChildDlg(int num)
+void CalarmeDlg::SwitchChildDlg(int num)	//자식 다이얼로그간 전환
 {
 	//모든 자식 다이얼로그를 숨긴후에
 	wordFilterDlg.ShowWindow(SW_HIDE);
 	screenshotDlg.ShowWindow(SW_HIDE);
 	
+
+	//버튼 이미지 변경과 갱신 부분
 	m_btnScreenShot.LoadBitmaps(IDB_SCREEN_SHOT_OFF);
 	m_btnWordFilter.LoadBitmaps(IDB_WORD_FILTER_OFF);
 	m_btnSiteBlock.LoadBitmaps(IDB_SITE_BLOCK_OFF);
@@ -411,7 +418,7 @@ void CalarmeDlg::SwitchChildDlg(int num)
 }
 
 
-void CalarmeDlg::OnBnClickedSiteBlock()
+void CalarmeDlg::OnBnClickedSiteBlock()	//사이트 차단은 권한이 다르므로 따로 실행
 {
 	SwitchChildDlg(SITE_BLOCK);
 	ShellExecute(NULL, "open", "SimpleFireWall.exe", NULL, NULL, SW_SHOW); 

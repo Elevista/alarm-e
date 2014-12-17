@@ -5,7 +5,9 @@
 
 #include "stdafx.h"
 
-CString GetTypedWord(){
+
+//~~~~~~~~~전역 함수~~~~~~~~
+CString GetTypedWord(){	//메모리맵에서 후킹한 문자열 목록을 얻어오는 부분
 	if(hMapFile3==NULL){
 		hMapFile3=CreateFileMapping(INVALID_HANDLE_VALUE,NULL,PAGE_READWRITE,0,sizeof(char)*40,_T("Alarme_TypedWord"));
 	}
@@ -19,7 +21,7 @@ CString GetTypedWord(){
 	return str;
 }
 
-void ClearTypedWord(CString word){
+void ClearTypedWord(CString word){	//해당 문자열을 후킹한 문자열에서 제거해주는 부분
 	if (hMapFile3 == NULL){
 		hMapFile3 = CreateFileMapping(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, sizeof(char)* 40, _T("Alarme_TypedWord"));
 	}

@@ -1,5 +1,5 @@
 // WordFilterDlg.cpp : 구현 파일입니다.
-//
+// 비속어 다이얼로그 클래스
 
 #include "stdafx.h"
 #include "alarm-e.h"
@@ -45,7 +45,7 @@ END_MESSAGE_MAP()
 // CWordFilterDlg 메시지 처리기입니다.
 
 
-void CWordFilterDlg::OnBnClickedInsertWord()
+void CWordFilterDlg::OnBnClickedInsertWord()	//단어 추가 버튼 클릭시
 {
 	UpdateData(true);
 	if(m_strWord.IsEmpty())return;
@@ -56,22 +56,22 @@ void CWordFilterDlg::OnBnClickedInsertWord()
 			return;
 		}
 	}
-	wordDB.AddNew();
-	wordDB.m_word=m_strWord;
-	wordDB.Update();
-	Refresh();
+	wordDB.AddNew();	//새로운 레코드 생성
+	wordDB.m_word=m_strWord;	//단어 삽입
+	wordDB.Update();	//업데이트하여 적용
+	Refresh();	//새로고침
 }
 
 
-void CWordFilterDlg::OnBnClickedDeleteWord()
+void CWordFilterDlg::OnBnClickedDeleteWord()	//삭제 클릭시
 {
-	if(index==-1) return;
-	if(wordDB.IsEOF())return;
+	if(index==-1) return;	//미선택시
+	if(wordDB.IsEOF())return;	//레코드가 하나도 없을시
 	wordDB.MoveFirst();
-	wordDB.Move(index);
+	wordDB.Move(index);	//현재 선택한 레코드로 이동
 	if(!wordDB.IsEOF()&&!wordDB.IsBOF()){
-		wordDB.Delete();
-		Refresh();
+		wordDB.Delete();	//레코드 삭제
+		Refresh();	//새로고침
 	}
 }
 
@@ -79,16 +79,15 @@ void CWordFilterDlg::OnBnClickedDeleteWord()
 
 
 
-void CWordFilterDlg::Refresh(void)
+void CWordFilterDlg::Refresh(void)	//목록을 새로 고치는 함수
 {
 	if(wordDB.IsOpen()){wordDB.Close();wordDB.Open();}
 	else{wordDB.Open();}
-	index=-1;
+	index=-1;	//현재 선택한 인덱스 선택안함(-1)으로 초기화
 	m_listWord.DeleteAllItems();	//리스트 갱신위해 다 지우기
 	m_vecWords.clear();	//백터 갱신위해 다 지우기
 	CString word;
 
-	//!!!
 	if(wordDB.IsEOF())return; //비어있으면 아무것도 안함
 	wordDB.MoveLast();	//마지막부터
 	
@@ -118,12 +117,12 @@ BOOL CWordFilterDlg::OnInitDialog()
 
 
 void CWordFilterDlg::OnLvnItemchangedListWord(NMHDR *pNMHDR, LRESULT *pResult)
-{
+{	//리스트컨트롤에서 선택 요소 바뀔때 발생하는 메세지의 핸들러
 	LPNMLISTVIEW pNMLV = reinterpret_cast<LPNMLISTVIEW>(pNMHDR);
 	index=pNMLV->iItem;	//현재 선택 아이템의 인덱스를 저장
 	*pResult = 0;
 }
-UINT CWordFilterDlg::MyThreadFunc(LPVOID pThreadParam)
+UINT CWordFilterDlg::MyThreadFunc(LPVOID pThreadParam)	//계속 비속어를 검사 메소드를 실행하는 쓰레드
 {
 	// 넘어 온 파라미터가 void 형 포인터 이므로 THREADPARAM 형 포인터로 반드시 캐스팅해야 한다.
 	THREADPARAM *pParam = (THREADPARAM *)pThreadParam;
@@ -141,18 +140,18 @@ UINT CWordFilterDlg::MyThreadFunc(LPVOID pThreadParam)
 	}
 	return 0; // 반드시 리턴을 해야 한다. 0으로 리턴 하는 것은 일종의 약속이다.
 }
-void CWordFilterDlg::MyWorkFunc()
+void CWordFilterDlg::MyWorkFunc()	//비속어 검사 메소드
 {
-	CString temp =  GetTypedWord();
-	for(unsigned i=0;i<m_vecWords.size();i++){
-		if(temp.Find(m_vecWords[i])>=0){	//(CString)wordDB.m_word가 해당 단어 값
-			temp.Replace(m_vecWords[i],"");
-			::ClearTypedWord(m_vecWords[i]);
+	CString temp =  GetTypedWord();	//메모리맵에서 현재까지 입력된 문자열을 얻어옴
+	for(unsigned i=0;i<m_vecWords.size();i++){	//벡터에서 첨부터 끝까지 검색
+		if(temp.Find(m_vecWords[i])>=0){	//만약 비속어가 포함되어 있으면
+			temp.Replace(m_vecWords[i],"");	//해당 단어가 중복검출이 되지 않게 temp에서 제거
+			::ClearTypedWord(m_vecWords[i]);//해당 단어가 중복검출이 되지 않게 맵파일에서 제거
 			AfxMessageBox(m_vecWords[i] + "는(은) 비속어 입니다.\n 사용을 자제해 주세요\n", MB_OK | MB_SYSTEMMODAL);
 		}
 	}
 }
-void CWordFilterDlg::StartThread()
+void CWordFilterDlg::StartThread()	//쓰레스 생성 메소드
 {
 	// 쓰레드함수의 파라미터로 쓸 구조체를 동적으로 생성한다.
 	THREADPARAM *pThreadParam = new THREADPARAM;
@@ -162,7 +161,7 @@ void CWordFilterDlg::StartThread()
 	m_pThread = AfxBeginThread(MyThreadFunc, pThreadParam);
 }
 
- void CWordFilterDlg::StopThread()
+ void CWordFilterDlg::StopThread()	//쓰레드 정지 메소드. 쓰이진 않았음.
 {
 	m_bDo = FALSE; // 쓰레드 정지 시키기 위해 FALSE를 입력한다.
 	// 정지용 플래그 값을 입력했으니 아래 함수로 쓰레드가 끝날 때까지 기다려 준다.
@@ -178,7 +177,7 @@ void CWordFilterDlg::StartThread()
 
 
 
- BOOL CWordFilterDlg::PreTranslateMessage(MSG* pMsg)
+ BOOL CWordFilterDlg::PreTranslateMessage(MSG* pMsg)//입력에 의한 종료 막는 부분
  {
 	 // TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
 	 //키눌린 메시지가 들어올때 esc이거나 return  값이면
