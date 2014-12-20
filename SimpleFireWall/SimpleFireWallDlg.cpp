@@ -236,8 +236,7 @@ BOOL CSimpleFireWallDlg::OnInitDialog()
 	}
 	if (!bInit){
 		sFile.SeekToEnd();
-		sFile.WriteString(_T("\r\n"));
-		sFile.WriteString((CString)comb);
+		sFile.WriteString((CString)comb+"\n");
 		fileOffset = sFile.SeekToEnd();
 	}
 	sFile.Seek(fileOffset, CFile::begin);
@@ -306,8 +305,7 @@ void CSimpleFireWallDlg::siteAdd()
 	dataTemp = dataTemp;
 	sFile.Open(m_hostsPath, CFile::modeReadWrite | CFile::typeText);
 	sFile.SeekToEnd();
-	sFile.WriteString(_T("\r\n"));
-	sFile.WriteString((CString)dataTemp);
+	sFile.WriteString((CString)dataTemp+"\n");
 	sFile.Close();
 
 	//to do
@@ -323,7 +321,7 @@ void CSimpleFireWallDlg::OnBnClickedBtnDel()
 	
 		
 	if (pos == NULL)
-		AfxMessageBox(_T("선택 한 내용이 없습니다.\n"));
+		AfxMessageBox(_T("선택 한 내용이 없습니다."));
 	else
 	{
 		CString dataTemp = _T("tests");
@@ -345,7 +343,6 @@ void CSimpleFireWallDlg::OnBnClickedBtnDel()
 		if (bRet){
 				
 			while (sFile.ReadString(line)){
-
 				file = file + line + "\n";
 
 			}
@@ -353,8 +350,8 @@ void CSimpleFireWallDlg::OnBnClickedBtnDel()
 		}
 		sFile.Close();
 
-		file.Replace(dataTemp , "");
-		file.Replace("\r\n\r\n" , "\r\n");
+		file.Replace(dataTemp+"\n", "");
+		file.Replace(dataTemp, "");
 
 		
 		bRet = sFile.Open(m_fakeHostsPath, CFile::modeCreate | CFile::modeReadWrite | CFile::typeText);
